@@ -1,0 +1,13 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- House outline -->
+  <path d="M80 320V170L200 80L320 170V320C320 331.046 311.046 340 300 340H100C88.9543 340 80 331.046 80 320Z" stroke="#1967B3" stroke-width="14" fill="none"/>
+  <!-- Window -->
+  <rect x="170" y="180" width="24" height="24" rx="3" fill="#1967B3"/>
+  <rect x="206" y="180" width="24" height="24" rx="3" fill="#1967B3"/>
+  <rect x="170" y="216" width="24" height="24" rx="3" fill="#1967B3"/>
+  <rect x="206" y="216" width="24" height="24" rx="3" fill="#1967B3"/>
+  <!-- Sparkle/star -->
+  <path d="M320 110C320 117 327 120 334 120C327 120 320 123 320 130C320 123 313 120 306 120C313 120 320 117 320 110Z" fill="#1967B3"/>
+  <!-- Text -->
+  <text x="60" y="390" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="bold" fill="#1967B3">Celestara</text>
+</svg>

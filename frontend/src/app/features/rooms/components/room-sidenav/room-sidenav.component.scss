@@ -1,0 +1,52 @@
+.container {
+  height: 100vh;
+  background: #1c3d5a;
+  overflow: hidden;
+}
+
+.sidenav {
+  width: 350px;
+  padding: 2px;
+  background: #2a4b6e;
+}
+
+.room-cards {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.room-card {
+  cursor: pointer;
+  transition: transform 0.2s;
+  background: #2e5a7b;
+  color: #ffffff;
+  border-radius: 8px;
+  margin-top: 10px;
+  padding: 8px;
+}
+
+.room-card:hover {
+  transform: translateY(-2px);
+  background: #3a6d91;
+}
+
+.content {
+  color: #ffffff;
+}
+
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #b0c4de;
+}
+
+ng-scrollbar {
+  --scrollbar-thumb-color: #1976d2;
+  --scrollbar-thumb-hover-color: #1565c0;
+  --scrollbar-size: 40px;
+  --scrollbar-border-radius: 4px;
+  --scrollbar-track-color: #2e5a7b;
+}

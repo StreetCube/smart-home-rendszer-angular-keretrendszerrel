@@ -1,0 +1,76 @@
+@use '@angular/material' as mat;
+
+html {
+  color: #000000;
+  html {
+    @include mat.theme(
+      (
+        color: mat.$violet-palette,
+        // or your custom palette
+        typography: Roboto,
+        density: 0,
+      )
+    );
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-color: #1c3d5a; /* Fallback background color */
+}
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: #4ad0e2,
+      container-text-color: #000000,
+    )
+  );
+
+  .success-snackbar {
+    --mdc-snackbar-container-color: #2bbe68 !important;
+    --mdc-snackbar-supporting-text-color: white !important;
+    --mat-mdc-snack-bar-button-color: white !important;
+  }
+
+  .error-snackbar {
+    --mdc-snackbar-container-color: #ff3737 !important;
+    --mdc-snackbar-supporting-text-color: white !important;
+    --mat-mdc-snack-bar-button-color: white !important;
+  }
+
+  .warn-button-container {
+    @include mat.button-overrides(
+      (
+        // For filled buttons (mat-raised-button)
+        filled-container-color: red,
+        filled-label-text-color: white,
+
+        // For outlined buttons (mat-button)
+        outlined-outline-color: red,
+        outlined-label-text-color: red
+      )
+    );
+  }
+}
+
+.warnButton {
+  @include mat.button-overrides(
+    (
+      // For filled buttons (mat-raised-button)
+      filled-container-color: red,
+      filled-label-text-color: white,
+
+      // For outlined buttons (mat-button)
+      outlined-outline-color: red,
+      outlined-label-text-color: red
+    )
+  );
+}

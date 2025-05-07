@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+    <div class="toolbar-content">
+        <div>
+            <h1 class="app-title">Celestara</h1>
+        </div>
+        <nav class="nav-menu">
+            @if (!authService.isAuthenticated()) {
+            <a mat-button routerLink="/auth/login" routerLinkActive="active-link">Login</a>
+            <a mat-button routerLink="/auth/registration" routerLinkActive="active-link">Registration</a>
+            } @else {
+            <a mat-button routerLink="/home" routerLinkActive="active-link">Home</a>
+            <a mat-button routerLink="/rooms" routerLinkActive="active-link">Rooms</a>
+            <a mat-button routerLink="/products" routerLinkActive="active-link">Products</a>
+            <a mat-button routerLink="/about" routerLinkActive="active-link">Profile</a>
+            <a mat-button (click)="logout()">Logout</a>
+            }
+        </nav>
+    </div>
+</mat-toolbar>

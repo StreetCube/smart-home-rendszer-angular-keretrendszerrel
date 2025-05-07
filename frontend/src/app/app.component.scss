@@ -1,0 +1,39 @@
+.app-footer {
+  background-color: #1c3d5a; // Matches the app's background color
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9rem;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2); // Stronger shadow for better visibility
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 15px;
+
+      a {
+        color: #4ae2a8;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #00b8d4; // Slightly brighter hover color
+        }
+      }
+    }
+  }
+}
