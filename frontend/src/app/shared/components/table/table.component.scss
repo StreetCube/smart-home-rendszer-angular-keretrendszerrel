@@ -1,18 +1,35 @@
 table {
   width: 100%;
+  height: 100%;
   border-collapse: collapse;
   font-family: 'Roboto', sans-serif;
-  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  table-layout: fixed;
+}
+
+.mat-table {
+  height: 100%;
 }
 
 .table-row {
   cursor: pointer;
   transition: background-color 0.3s ease;
-  &:hover {
-    background-color: rgba(74, 144, 226, 0.1); /* Subtle hover effect */
-  }
+}
+.table-row:hover {
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+.mat-row,
+.mat-header-row {
+  height: 30px !important;
+}
+
+.mat-cell,
+.mat-header-cell {
+  padding: 4px 16px; /* Reduced vertical padding */
+  text-align: left;
+  vertical-align: middle;
 }
 
 #hiddenMenuTrigger {

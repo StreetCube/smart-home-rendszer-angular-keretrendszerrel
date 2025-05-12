@@ -23,6 +23,7 @@ module.exports = (sequelize) => {
       modelName: 'Room',
       tableName: 'rooms',
       timestamps: true,
+      underscored: true,
       defaultScope: {
         attributes: { exclude: ['UserId'] },
       },

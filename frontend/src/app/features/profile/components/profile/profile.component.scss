@@ -1,0 +1,57 @@
+.profile-root {
+  display: flex;
+  gap: 64px;
+  margin: 40px 0 0 0;
+  justify-content: center;
+  align-items: flex-start;
+  background: #29435c;
+  min-height: 100vh;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+.profile-info,
+.profile-settings {
+  background: transparent;
+  color: #fff;
+  padding: 0;
+  min-width: 320px;
+}
+
+.profile-name {
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.profile-email {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.profile-meta {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.profile-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settings-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.lang-select {
+  width: 200px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.settings-row {
+  font-size: 1rem;
+  margin-top: 8px;
+}

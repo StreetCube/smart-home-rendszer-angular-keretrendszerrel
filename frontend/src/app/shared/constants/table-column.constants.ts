@@ -5,7 +5,7 @@ export class TableColumnConstants {
     ROOM: [
       {
         property_name: 'name',
-        header: 'Room Name',
+        header: 'table_columns.room_name',
       },
     ],
   };

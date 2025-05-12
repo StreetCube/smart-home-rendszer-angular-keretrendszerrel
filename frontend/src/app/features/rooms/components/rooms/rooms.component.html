@@ -1,6 +1,6 @@
 <div class="rooms-container">
     <div class="top-section">
-        <button mat-raised-button color="primary">Add New Room</button>
+        <button mat-raised-button color="primary">{{'rooms.list.createRoom' | translate}}</button>
     </div>
     <div class="bottom-section">
         <app-table [data]="rooms" [columns]="columns">

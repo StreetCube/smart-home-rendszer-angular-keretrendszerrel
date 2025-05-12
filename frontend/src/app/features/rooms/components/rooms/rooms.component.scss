@@ -1,17 +1,13 @@
 .rooms-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Full height of the viewport */
+  height: 100vh; /* Full viewport height */
 }
 
-.top-section {
-  flex: 1; /* Take up half the screen */
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-}
-
+.top-section,
 .bottom-section {
-  flex: 1; /* Take up the other half of the screen */
-  overflow-y: auto; /* Allow scrolling if the table content overflows */
+  flex: 1; /* Each takes half the screen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

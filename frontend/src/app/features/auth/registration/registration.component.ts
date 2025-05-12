@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterModule } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SnackbarService } from '../../../shared/services/snackbar/snackbar.service';
 import { GeneralCustomCode } from '../../../shared/types/generalHttpResponse';
 import { AuthService } from '../services/auth.service';
@@ -21,6 +22,7 @@ import { passwordMatchValidator } from '../validator/passwordMatchValidator';
     MatButtonModule,
     RouterModule,
     MatIconModule,
+    TranslatePipe
   ],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',

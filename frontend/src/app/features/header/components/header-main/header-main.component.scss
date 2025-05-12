@@ -5,6 +5,7 @@ mat-toolbar {
 .toolbar-content {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   color: #15582f;
 }
@@ -45,4 +46,31 @@ mat-toolbar {
   background-color: #15582f;
   font-weight: bold;
   border-radius: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .nav-menu {
+    gap: 8px;
+    margin-right: 2%;
+  }
+
+  .nav-menu a span {
+    display: none;
+  }
+
+  .app-title {
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-menu {
+    gap: 4px;
+  }
+
+  mat-icon {
+    margin: 0 !important;
+    font-size: 20px;
+  }
 }

@@ -6,8 +6,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterModule } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SnackbarService } from '../../../shared/services/snackbar/snackbar.service';
 import { GeneralCustomCode } from '../../../shared/types/generalHttpResponse';
+import { errorCodeMap } from '../../translation/constants/language.constants';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -20,6 +22,7 @@ import { AuthService } from '../services/auth.service';
     MatIconModule,
     ReactiveFormsModule,
     RouterModule,
+    TranslatePipe,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -48,7 +51,9 @@ export class LoginComponent {
             this.router.navigate(['/home']);
             break;
           default:
-            this.snackBarService.showError(response.error.message);
+            this.snackBarService.showError(
+              errorCodeMap[(response.error.code as keyof typeof errorCodeMap) || 'default_error']
+            );
             break;
         }
       },

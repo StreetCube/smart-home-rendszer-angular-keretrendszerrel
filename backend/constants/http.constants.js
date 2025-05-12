@@ -23,6 +23,8 @@ exports.CUSTOM_CODE = Object.freeze({
   API: {
     ALREADY_EXISTS: 2001, // Resource already exists
     ERROR_GETTING_RESOURCE: 2002, // Error creating resource
+    ERROR_CREATING_RESOURCE: 2003, // Error creating resource
+    ERROR_DELETING_RESOURCE: 2004, // Error deleting resource
   },
   GENERAL: {
     BAD_REQUEST: 3333, // General bad request error

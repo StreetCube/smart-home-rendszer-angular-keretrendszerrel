@@ -51,3 +51,6 @@ const syncDatabase = () => {
       logger.error('Error syncing database:', error);
     });
 };
+
+//startControllers
+require('./controllers/zigbeeController').start();

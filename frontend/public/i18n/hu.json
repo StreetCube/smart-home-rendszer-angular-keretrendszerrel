@@ -1,0 +1,97 @@
+{
+    "app": {
+        "title": "Celestara",
+        "footer": {
+            "copyright": "© 2025 Celestara. Készítette a Celestara Kft.",
+            "about": "Rólunk",
+            "sendMessage": "Üzenet küldése"
+        }
+    },
+    "header": {
+        "registration": "Regisztráció",
+        "home": "Kezdőlap",
+        "rooms": "Szobák",
+        "products": "Eszközök",
+        "profile": "Profil",
+        "logout": "Kijelentkezés"
+    },
+    "auth": {
+        "login": {
+            "title": "Bejelentkezés",
+            "username": "Felhasználónév",
+            "password": "Jelszó",
+            "loginButton": "Bejelentkezés",
+            "forgotPassword": "Elfelejtette a jelszavát?",
+            "noAccount": "Nincs fiókja?",
+            "registerHere": "Regisztráljon itt"
+        },
+        "registration": {
+            "title": "Regisztráció a Celestarára",
+            "username": "Felhasználónév",
+            "email": "E-mail",
+            "password": "Jelszó",
+            "confirmPassword": "Jelszó megerősítése",
+            "registerButton": "Regisztráció",
+            "alreadyHaveAccount": "Már van fiókja?",
+            "loginHere": "Jelentkezzen be itt",
+            "errors": {
+                "usernameRequired": "A felhasználónév megadása kötelező",
+                "emailRequired": "Az e-mail megadása kötelező",
+                "emailInvalid": "Érvénytelen e-mail cím",
+                "passwordRequired": "A jelszó megadása kötelező",
+                "passwordMinLength": "A jelszónak legalább 6 karakter hosszúnak kell lennie",
+                "passwordMismatch": "A jelszavak nem egyeznek"
+            }
+        },
+        "logout": {
+            "dialog_title": "Kijelentkezés",
+            "confirmation": "Biztosan kijelentkezik?",
+            "yes": "Igen",
+            "no": "Nem"
+        }
+    },
+    "profile": {
+        "title": "Profil",
+        "memberSince": "Tag mióta:",
+        "settings": {
+            "title": "Beállítások",
+            "language": "Nyelv",
+            "theme": "Téma",
+            "notifications": "Értesítések",
+            "changePassword": "Jelszó megváltoztatása"
+        }
+    },
+    "rooms": {
+        "active_devices": "Aktív eszközök:",
+        "list": {
+            "title": "Szobák",
+            "noRooms": "Nincsenek elérhető szobák",
+            "createRoom": "Szoba létrehozása"
+        },
+        "details": {
+            "title": "Szoba részletei",
+            "name": "Név",
+            "createdAt": "Létrehozva",
+            "updatedAt": "Frissítve"
+        }
+    },
+    "errors": {
+        "notFound": "Az oldal nem található",
+        "unauthorized": "Nincs jogosultsága az oldal eléréséhez",
+        "serverError": "Váratlan hiba történt. Kérjük, próbálja meg később.",
+        "invalid_user_pass": "Érvénytelen felhasználónév vagy jelszó",
+        "user_not_found": "Felhasználó nem található",
+        "default_error": "Hiba történt. Kérjük, próbálja meg újra."
+    },
+    "table_columns": {
+        "room_name": "Szoba neve"
+    },
+    "paginator": {
+        "items_per_page": "Elemek oldalanként",
+        "next_page": "Következő oldal",
+        "previous_page": "Előző oldal",
+        "first_page": "Első oldal",
+        "last_page": "Utolsó oldal",
+        "of_label": "a(z)"
+    }
+}

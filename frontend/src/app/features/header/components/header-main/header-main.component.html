@@ -1,18 +1,43 @@
 <mat-toolbar color="primary">
     <div class="toolbar-content">
+        @let isMobile = responsiveService.isMobile() | async;
+
+        @if (!isMobile) {
         <div>
             <h1 class="app-title">Celestara</h1>
         </div>
+        }
         <nav class="nav-menu">
             @if (!authService.isAuthenticated()) {
-            <a mat-button routerLink="/auth/login" routerLinkActive="active-link">Login</a>
-            <a mat-button routerLink="/auth/registration" routerLinkActive="active-link">Registration</a>
+            <a mat-button routerLink="/auth/login" routerLinkActive="active-link">
+                <mat-icon>login</mat-icon>
+                @if (!isMobile) { <span>{{'auth.login.title' | translate}}</span> }
+            </a>
+            <a mat-button routerLink="/auth/registration" routerLinkActive="active-link">
+                <mat-icon>person_add</mat-icon>
+                @if (!isMobile) { <span>{{'header.registration' | translate}}</span> }
+            </a>
             } @else {
-            <a mat-button routerLink="/home" routerLinkActive="active-link">Home</a>
-            <a mat-button routerLink="/rooms" routerLinkActive="active-link">Rooms</a>
-            <a mat-button routerLink="/products" routerLinkActive="active-link">Products</a>
-            <a mat-button routerLink="/about" routerLinkActive="active-link">Profile</a>
-            <a mat-button (click)="logout()">Logout</a>
+            <a mat-button routerLink="/home" routerLinkActive="active-link">
+                <mat-icon>home</mat-icon>
+                @if (!isMobile) { <span>{{'header.home' | translate}}</span> }
+            </a>
+            <a mat-button routerLink="/rooms" routerLinkActive="active-link">
+                <mat-icon>meeting_room</mat-icon>
+                @if (!isMobile) { <span>{{'header.rooms' | translate}}</span> }
+            </a>
+            <a mat-button routerLink="/products" routerLinkActive="active-link">
+                <mat-icon>devices</mat-icon>
+                @if (!isMobile) { <span>{{'header.products' | translate}}</span> }
+            </a>
+            <a mat-button routerLink="/profile" routerLinkActive="active-link">
+                <mat-icon>person</mat-icon>
+                @if (!isMobile) { <span>{{'header.profile' | translate}}</span> }
+            </a>
+            <a mat-button (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                @if (!isMobile) { <span>{{'header.logout' | translate}}</span> }
+            </a>
             }
         </nav>
     </div>

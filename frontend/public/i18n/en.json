@@ -1,0 +1,98 @@
+{
+    "app": {
+        "title": "Celestara",
+        "footer": {
+            "copyright": "© 2025 Celestara. Created by Celestara Kft.",
+            "about": "About",
+            "sendMessage": "Send a Message"
+        }
+    },
+    "header": {
+        "registration": "registration",
+        "home": "home",
+        "rooms": "rooms",
+        "products": "products",
+        "profile": "profile",
+        "logout": "logout"
+    },
+    "auth": {
+        "login": {
+            "title": "Login",
+            "username": "Username",
+            "password": "Password",
+            "loginButton": "Login",
+            "forgotPassword": "Forgot Password?",
+            "login_succes": "Login successful",
+            "noAccount": "Don't have an account?",
+            "registerHere": "Register here"
+        },
+        "registration": {
+            "title": "Register to Celestara",
+            "username": "Username",
+            "email": "Email",
+            "password": "Password",
+            "confirmPassword": "Confirm Password",
+            "registerButton": "Register",
+            "alreadyHaveAccount": "Already have an account?",
+            "loginHere": "Login here",
+            "errors": {
+                "usernameRequired": "Username is required",
+                "emailRequired": "Email is required",
+                "emailInvalid": "Invalid email address",
+                "passwordRequired": "Password is required",
+                "passwordMinLength": "Password must be at least 6 characters",
+                "passwordMismatch": "Passwords do not match"
+            }
+        },
+        "logout": {
+            "dialog_title": "Logout",
+            "confirmation": "Are you sure you want to log out?",
+            "yes": "Yes",
+            "no": "No"
+        }
+    },
+    "profile": {
+        "title": "Profile",
+        "memberSince": "Member since:",
+        "settings": {
+            "title": "Settings",
+            "language": "Language",
+            "theme": "Theme",
+            "notifications": "Notifications",
+            "changePassword": "Change Password"
+        }
+    },
+    "rooms": {
+        "active_devices": "Active Devices:",
+        "list": {
+            "title": "Rooms",
+            "noRooms": "No rooms available",
+            "createRoom": "Create Room"
+        },
+        "details": {
+            "title": "Room Details",
+            "name": "Name",
+            "createdAt": "Created At",
+            "updatedAt": "Updated At"
+        }
+    },
+    "errors": {
+        "notFound": "Page not found",
+        "unauthorized": "You are not authorized to access this page",
+        "serverError": "An unexpected error occurred. Please try again later.",
+        "invalid_user_pass": "Invalid username or password",
+        "user_not_found": "User not found",
+        "default_error": "An error occurred. Please try again."
+    },
+    "table_columns": {
+        "room_name": "Room Name"
+    },
+    "paginator": {
+        "items_per_page": "Items per page",
+        "next_page": "Next page",
+        "previous_page": "Previous page",
+        "first_page": "First page",
+        "last_page": "Last page",
+        "of_label": "of"
+    }
+}

@@ -2,6 +2,7 @@ exports.BASE_ROUTE = Object.freeze({
   AUTH: '/auth',
   API: '/api',
   CRUD: '/crud/:modelName',
+  DEVICE: '/device',
 });
 
 exports.ROUTES = Object.freeze({
@@ -15,5 +16,9 @@ exports.ROUTES = Object.freeze({
   CRUD: {
     CREATE: `/create`,
     GET_ALL: '/get-all',
+  },
+  DEVICE: {
+    INCLUDE: '/include',
+    EXCLUDE: '/:ieeeAddress/exclude',
   },
 });

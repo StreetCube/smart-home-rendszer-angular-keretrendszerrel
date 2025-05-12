@@ -2,14 +2,17 @@ import { AfterViewInit, Component, computed, effect, input, OnInit, Signal, View
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { TranslatePipe } from '@ngx-translate/core';
 import { RowAction, TableColumn } from '../../types/table.types';
+import { CustomMatPaginatorIntl } from './custom-mat-paginator-intl';
 
 @Component({
   selector: 'app-table',
-  imports: [MatTableModule, MatButtonModule, MatMenuModule, MatIconModule, MatPaginator, MatSortModule],
+  imports: [MatTableModule, MatButtonModule, MatMenuModule, MatIconModule, MatPaginator, MatSortModule, TranslatePipe],
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })

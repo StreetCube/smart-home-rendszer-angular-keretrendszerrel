@@ -1,0 +1,56 @@
+version: 4
+mqtt:
+  version: 4
+  base_topic: zigbee2mqtt
+  server: mqtt://mqtt_broker:1883
+  client_id: zigbee2mqtt
+  reject_unauthorized: false
+  include_device_information: true
+  keepalive: 60
+serial:
+  port: /dev/ttyUSB0
+  adapter: zstack
+advanced:
+  channel: 11
+  network_key:
+    - 49
+    - 33
+    - 249
+    - 10
+    - 222
+    - 8
+    - 155
+    - 66
+    - 181
+    - 17
+    - 161
+    - 191
+    - 187
+    - 249
+    - 128
+    - 133
+  pan_id: 17568
+  ext_pan_id:
+    - 223
+    - 5
+    - 209
+    - 100
+    - 135
+    - 228
+    - 49
+    - 87
+  cache_state: true
+  log_level: info
+frontend:
+  enabled: true
+homeassistant:
+  enabled: false
+availability:
+  enabled: true
+  active:
+    timeout: 1
+  passive:
+    timeout: 150
+devices:
+  '0xa4c1384290042979':
+    friendly_name: '0xa4c1384290042979'

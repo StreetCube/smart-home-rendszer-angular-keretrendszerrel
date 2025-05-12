@@ -22,6 +22,15 @@ exports.checkExistingElementsForCreation = async (modelName, body) => {
   let findWhere = {};
   let errorCode = HTTP_CONSTANTS.CUSTOM_CODE.API.ALREADY_EXISTS;
 
+  switch (modelName) {
+    case MODEL_CONSTANTS.NAME.USER:
+      logger.debug(`[${TAG}] Preparing where condition for User model`);
+      findWhere = UserCrudService.createWhereOptionForCreation(body);
+      errorCode = HTTP_CONSTANTS.CUSTOM_CODE.AUTH.USER_ALREADY_EXISTS;
+      break;
+    default:
+      break;
+  }
   if (modelName === MODEL_CONSTANTS.NAME.USER) {
     logger.debug(`[${TAG}] Preparing where condition for User model`);
     findWhere = UserCrudService.createWhereOptionForCreation(body);

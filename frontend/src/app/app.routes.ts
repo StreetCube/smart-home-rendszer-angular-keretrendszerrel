@@ -31,6 +31,12 @@ export const routes: Routes = [
     loadComponent: () => import('./shared/components/not-found/not-found.component').then((m) => m.NotFoundComponent),
   },
   {
+    path: 'profile',
+    loadComponent: () =>
+      import('./features/profile/components/profile/profile.component').then((m) => m.ProfileComponent),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     redirectTo: 'not-found',
   },

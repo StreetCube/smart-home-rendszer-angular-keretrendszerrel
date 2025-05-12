@@ -5,6 +5,8 @@ const ROUTER_CONSTANTS = require('../constants/route.constants');
 
 const authRoutes = require('../routes/authRoutes');
 const crudRoutes = require('../routes/crudRoutes');
+const deviceRoutes = require('../routes/deviceRoutes');
+
 const conditionalAuthorizationMiddleware = require('../middleware/conditionalAuthorizationMiddleware');
 
 router.use(ROUTER_CONSTANTS.BASE_ROUTE.AUTH, authRoutes);
@@ -14,6 +16,7 @@ router.use(
   conditionalAuthorizationMiddleware,
   crudRoutes
 );
+router.use(ROUTER_CONSTANTS.BASE_ROUTE.DEVICE, deviceRoutes);
 
 //healthcheck
 router.use(

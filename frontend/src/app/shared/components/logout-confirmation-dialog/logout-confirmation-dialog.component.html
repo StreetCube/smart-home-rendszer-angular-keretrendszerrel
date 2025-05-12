@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Confirm Logout</h2>
+<h2 mat-dialog-title>{{'auth.logout.dialog_title' | translate}}</h2>
 <mat-dialog-content>
-    Are you sure you want to log out?
+    {{'auth.logout.confirmation' | translate}}
 </mat-dialog-content>
 <mat-dialog-actions class="warn-button-container" align="end">
-    <button mat-button mat-dialog-close="no">No</button>
-    <button mat-raised-button color="warn" mat-dialog-close="yes">Yes</button>
+    <button mat-button mat-dialog-close="no">{{'auth.logout.no' | translate}}</button>
+    <button mat-raised-button color="warn" mat-dialog-close="yes">{{'auth.logout.yes' | translate}}</button>
 </mat-dialog-actions>

@@ -1,12 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { TableColumnConstants } from '../../../../shared/constants/table-column.constants';
 import { RoomService } from '../../services/room.service';
 
 @Component({
   selector: 'app-rooms',
-  imports: [TableComponent, MatButtonModule],
+  imports: [TableComponent, MatButtonModule, TranslatePipe],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss',
 })
