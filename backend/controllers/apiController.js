@@ -3,6 +3,9 @@ const HTTP_CONSTANTS = require('../constants/http.constants');
 const logger = require('../util/logger');
 const sequelize = require('../database/sequelize');
 const CustomError = require('../util/customError');
+const MODEL_CONSTANTS = require('../constants/model.constants');
+const zigbeeController = require('./zigbeeController');
+const { INCLUSION_CONSTANTS } = require('../constants/inclusion.constants');
 
 exports.createPreparation = async (req, res) => {
   const { body, modelContext } = req;
@@ -46,13 +49,25 @@ const createModel = async (modelContext, body, res) => {
 exports.getAll = async (req, res) => {
   const { modelContext } = req;
   try {
-    const models = await modelContext.instance.findAll({});
+    const hasWithUserScope =
+      modelContext.instance.options.scopes &&
+      modelContext.instance.options.scopes.withUser;
+
+    let models;
+    if (hasWithUserScope) {
+      models = await modelContext.instance
+        .scope({ method: ['withUser', req.user.id] })
+        .findAll({});
+    } else {
+      models = await modelContext.instance.findAll({});
+    }
     return res.status(HTTP_CONSTANTS.CODE.OK).json({
       message: `Fetched all ${modelContext.name}`,
       code: HTTP_CONSTANTS.CODE.OK,
       data: models,
     });
   } catch (error) {
+    logger.error(`Error fetching all ${modelContext.name}: ${error.message}`);
     return res
       .status(error.httpStatus || HTTP_CONSTANTS.CODE.BAD_REQUEST)
       .json({

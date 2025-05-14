@@ -9,12 +9,15 @@ export class SnackbarService {
   constructor() {}
 
   private snackBar = inject(MatSnackBar);
-  private injector = inject(Injector)
+  private injector = inject(Injector);
   private get translateService(): TranslateService {
     return this.injector.get(TranslateService);
   }
 
-  public showSuccess(message: string) {
+  public showSuccess(message: string, translate = true) {
+    if (translate) {
+      message = this.translateService.instant(message);
+    }
     this.snackBar.open(message, 'Close', {
       duration: 3000,
       horizontalPosition: 'center',

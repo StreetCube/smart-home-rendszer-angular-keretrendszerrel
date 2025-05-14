@@ -6,12 +6,22 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TranslatePipe } from '@ngx-translate/core';
+import { NestedValuePipe } from '../../pipe/nested-value.pipe';
 import { RowAction, TableColumn } from '../../types/table.types';
 import { CustomMatPaginatorIntl } from './custom-mat-paginator-intl';
 
 @Component({
   selector: 'app-table',
-  imports: [MatTableModule, MatButtonModule, MatMenuModule, MatIconModule, MatPaginator, MatSortModule, TranslatePipe],
+  imports: [
+    MatTableModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatPaginator,
+    MatSortModule,
+    TranslatePipe,
+    NestedValuePipe,
+  ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',

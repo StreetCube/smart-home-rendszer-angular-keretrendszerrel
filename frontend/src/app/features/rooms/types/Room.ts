@@ -7,6 +7,7 @@ export interface Room_GetAllResponse {
 
 export interface Room_To_Create {
   name: string;
+  UserId: string;
 }
 export interface Room_To_Update {
   id: string;
@@ -18,4 +19,8 @@ export interface Room {
   name: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface RoomWithProductNumbers extends Room {
+  activeDevices: number;
 }

@@ -37,6 +37,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'products',
+    loadComponent: () =>
+      import('./features/products/components/products/products.component').then((m) => m.ProductsComponent),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     redirectTo: 'not-found',
   },

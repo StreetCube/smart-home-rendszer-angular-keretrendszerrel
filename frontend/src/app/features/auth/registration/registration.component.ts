@@ -22,7 +22,7 @@ import { passwordMatchValidator } from '../validator/passwordMatchValidator';
     MatButtonModule,
     RouterModule,
     MatIconModule,
-    TranslatePipe
+    TranslatePipe,
   ],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
@@ -53,7 +53,7 @@ export class RegistrationComponent implements OnInit {
         next: (response) => {
           switch (response.code) {
             case GeneralCustomCode.CREATED:
-              this.snackBarService.showSuccess('Registration successful! Redirecting...');
+              this.snackBarService.showSuccess('auth.registration.success');
               this.router.navigate(['/home']);
               break;
 

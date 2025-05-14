@@ -47,7 +47,7 @@ export class LoginComponent {
       next: (response) => {
         switch (response.code) {
           case GeneralCustomCode.SUCCESS:
-            this.snackBarService.showSuccess('Login successful! Redirecting...');
+            this.snackBarService.showSuccess('auth.login.success');
             this.router.navigate(['/home']);
             break;
           default:

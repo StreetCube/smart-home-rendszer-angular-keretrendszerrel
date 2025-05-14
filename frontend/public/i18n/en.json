@@ -20,9 +20,9 @@
             "title": "Login",
             "username": "Username",
             "password": "Password",
+            "success": "Login successful",
             "loginButton": "Login",
             "forgotPassword": "Forgot Password?",
-            "login_succes": "Login successful",
             "noAccount": "Don't have an account?",
             "registerHere": "Register here"
         },
@@ -31,6 +31,7 @@
             "username": "Username",
             "email": "Email",
             "password": "Password",
+            "success": "Registration successful",
             "confirmPassword": "Confirm Password",
             "registerButton": "Register",
             "alreadyHaveAccount": "Already have an account?",
@@ -74,7 +75,8 @@
             "name": "Name",
             "createdAt": "Created At",
             "updatedAt": "Updated At"
-        }
+        },
+        "select_room": "Select a Room"
     },
     "errors": {
         "notFound": "Page not found",
@@ -82,10 +84,17 @@
         "serverError": "An unexpected error occurred. Please try again later.",
         "invalid_user_pass": "Invalid username or password",
         "user_not_found": "User not found",
-        "default_error": "An error occurred. Please try again."
+        "default_error": "An error occurred. Please try again.",
+        "product_already_exists": "Product already exists",
+        "product_default_error": "An error occurred while creating the product"
     },
     "table_columns": {
-        "room_name": "Room Name"
+        "room_name": "Room Name",
+        "product_name": "Product Name",
+        "product_type": "Product Type",
+        "product_status": "Product Status",
+        "supportedProduct_name": "Device (Model - Label)",
+        "product_status_hover": "Status"
     },
     "paginator": {
         "items_per_page": "Items per page",
@@ -94,5 +103,24 @@
         "first_page": "First page",
         "last_page": "Last page",
         "of_label": "of"
+    },
+    "create": {
+        "room": {
+            "title": "Create Room",
+            "name": "Room Name",
+            "success": "Room created successfully",
+            "already_exists": "Room name already exists",
+            "uknown_error": "Unknown error"
+        },
+        "product": {
+            "title": "Add Product",
+            "name": "Product Name",
+            "room": "Room",
+            "stop_inclusion": "Stop Inclusion"
+        }
+    },
+    "actions": {
+        "save": "Save",
+        "cancel": "Cancel"
     }
 }

@@ -17,10 +17,11 @@ export class AuthService {
       } else {
         this.cookieManagerService.clearAuthState();
       }
+      console.log(this.user());
     });
   }
 
-  private user = signal<UserAfterCreate | null>(null);
+  public user = signal<UserAfterCreate | null>(null);
   public isAuthenticated = computed(() => !!this.user());
 
   private http = inject(HttpClient);

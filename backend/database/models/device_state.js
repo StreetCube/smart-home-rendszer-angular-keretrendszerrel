@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
         primaryKey: true,
       },
       boolValue: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.STRING,
         allowNull: true,
         validate: {
           isOnlyValue() {

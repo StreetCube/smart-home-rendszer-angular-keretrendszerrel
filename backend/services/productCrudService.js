@@ -8,6 +8,8 @@ const MODEL_CONSTANTS = require('../constants/model.constants');
 const CustomError = require('../util/customError');
 const logger = require('../util/logger');
 const httpConstants = require('../constants/http.constants');
+const deviceStateCrudService = require('./deviceStateCrudService');
+const sequelize = require('../database/sequelize');
 const { Op } = require('sequelize');
 
 /**
@@ -37,7 +39,7 @@ exports.getProductByIeeeAddress = async (ieeeAddress, transaction) => {
  * @param {object} body - The product data.
  * @throws {CustomError} If data is invalid.
  */
-checkDataValidity = async (body) => {
+const checkDataValidity = async (body) => {
   if (!body.name || !body.RoomId) {
     throw new CustomError(
       'Invalid data provided',
@@ -54,11 +56,11 @@ checkDataValidity = async (body) => {
  * @param {object} [transaction] - Optional Sequelize transaction.
  * @throws {CustomError} If product already exists or on error.
  */
-const checkElementForCreation = async ({ name, ieee_address }, transaction) => {
+exports.checkElementForCreation = async ({ name }, transaction) => {
   try {
     const product = await models[MODEL_CONSTANTS.NAME.PRODUCT].findOne({
       where: {
-        [Op.or]: [{ name }, { ieee_address }],
+        name,
       },
       transaction,
     });
@@ -70,7 +72,10 @@ const checkElementForCreation = async ({ name, ieee_address }, transaction) => {
       );
     }
   } catch (error) {
-    logger.error(`Error checking product existence: ${error.message}`);
+    logger.error(`Error checking product existence: ${error}`);
+    if (error instanceof CustomError) {
+      throw error;
+    }
     throw new CustomError(
       'Error checking product existence',
       httpConstants.CUSTOM_CODE.GENERAL.OTHER,
@@ -90,7 +95,6 @@ const checkElementForCreation = async ({ name, ieee_address }, transaction) => {
 exports.createProduct = async (body, transaction) => {
   try {
     await checkDataValidity(body);
-    await checkElementForCreation(body, transaction);
     const product = await models[MODEL_CONSTANTS.NAME.PRODUCT].create(
       {
         name: body.name,
@@ -136,5 +140,121 @@ exports.removeProduct = async (ieeeAddress, transaction) => {
       httpConstants.CUSTOM_CODE.API.ERROR_DELETING_RESOURCE,
       httpConstants.CODE.INTERNAL_SERVER_ERROR
     );
+  }
+};
+
+exports.getProductsForRoom = async (req, res) => {
+  const roomId = req.params.roomId;
+  try {
+    if (!roomId) {
+      throw new CustomError(
+        'Room ID is required',
+        httpConstants.CUSTOM_CODE.GENERAL.BAD_REQUEST,
+        httpConstants.CODE.BAD_REQUEST
+      );
+    }
+
+    // 1. First get products with capabilities (no device states)
+    const products = await models[MODEL_CONSTANTS.NAME.PRODUCT].findAll({
+      where: {
+        RoomId: roomId,
+      },
+      attributes: ['state', 'ieeeAddress', 'name'],
+      include: [
+        {
+          model: models[MODEL_CONSTANTS.NAME.SUPPORTED_PRODUCT],
+          attributes: ['name', 'product_type'],
+          include: [
+            {
+              model: models[MODEL_CONSTANTS.NAME.PRODUCT_CAPABILITY],
+              attributes: [
+                'id',
+                'name',
+                'type',
+                'access',
+                'label',
+                'property',
+                'description',
+              ],
+              include: [
+                models[MODEL_CONSTANTS.NAME.BINARY_EXPOSE],
+                models[MODEL_CONSTANTS.NAME.ENUM_EXPOSE],
+                models[MODEL_CONSTANTS.NAME.NUMERIC_EXPOSE],
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    // 2. Get latest device states for all product capabilities
+
+    // 3. Map latest states to products
+    const productsWithLatestStates = await Promise.all(
+      products.map(async (product) => {
+        const productJson = product.get({ plain: true });
+
+        const capabilityIds =
+          productJson.SupportedProduct.ProductCapabilities.map((pc) => pc.id);
+        const latestDeviceStateCreatedAt =
+          await deviceStateCrudService.getLatestDeviceStates(
+            productJson,
+            capabilityIds
+          );
+
+        const states = await models[MODEL_CONSTANTS.NAME.DEVICE_STATE].findAll({
+          attributes: [
+            'boolValue',
+            'numericValue',
+            'textValue',
+            'ProductCapabilityId',
+          ],
+          where: {
+            [Op.or]: latestDeviceStateCreatedAt.map((cond) => ({
+              ProductCapabilityId: cond.ProductCapabilityId,
+              createdAt: cond.latest_at,
+            })),
+          },
+          order: [['created_at', 'DESC']],
+        });
+
+        const capabilitiesWithState =
+          productJson.SupportedProduct.ProductCapabilities.map((cap) => ({
+            ...cap,
+            deviceState:
+              states.find((state) => state.ProductCapabilityId === cap.id) ||
+              null,
+          }));
+
+        return {
+          ...productJson,
+          SupportedProduct: {
+            ...productJson.SupportedProduct,
+            ProductCapabilities: capabilitiesWithState,
+          },
+        };
+      })
+    );
+
+    res.status(httpConstants.CODE.OK).json({
+      message: 'Products fetched successfully',
+      code: httpConstants.CODE.OK,
+      data:
+        Array.isArray(productsWithLatestStates) && products.length === 0
+          ? null
+          : productsWithLatestStates,
+    });
+  } catch (error) {
+    logger.error(`Error fetching products for room: ${error.message}`);
+    if (error instanceof CustomError) {
+      return res.status(error.code).json({
+        message: error.message,
+        code: error.customCode,
+      });
+    }
+    return res.status(httpConstants.CODE.INTERNAL_SERVER_ERROR).json({
+      message: 'Error fetching products for room',
+      code: httpConstants.CUSTOM_CODE.API.ERROR_GETTING_RESOURCE,
+    });
   }
 };

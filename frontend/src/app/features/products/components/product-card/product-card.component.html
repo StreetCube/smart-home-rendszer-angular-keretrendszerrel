@@ -1,0 +1,56 @@
+<mat-card class="device-card">
+    <mat-card-header>
+        <div mat-card-avatar>
+            <!-- Optionally, put an avatar or icon here -->
+        </div>
+        <mat-card-title>
+            {{ product().name }}
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{ product().ieeeAddress }}
+        </mat-card-subtitle>
+        <span class="device-status-icon" [ngClass]="{'online': product().state, 'offline': !product().state}">
+            <mat-icon>
+                {{ product().state ? 'check_circle' : 'cancel' }}
+            </mat-icon>
+        </span>
+    </mat-card-header>
+
+    <mat-card-content>
+        <!-- Show more details even when collapsed -->
+        <div class="device-details">
+            <div><strong>Linkquality:</strong> {{ linkQuality }} lqi</div>
+            <!-- Add more summary fields as needed -->
+        </div>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <span>Show Capabilities</span>
+            </mat-expansion-panel-header>
+            @for (cap of product().SupportedProduct.ProductCapabilities; track cap.id) {
+            <div class="capability-row" [matTooltip]="cap.description" matTooltipPosition="above">
+                <span class="cap-label">{{ cap.label }}:</span>
+                <span>
+                    @if (cap.type === 'numeric') {
+                    {{ cap.deviceState.numericValue }} {{ cap.NumericExpose?.unit || '' }}
+                    }
+                    @if (cap.type === 'enum') {
+                    <mat-form-field appearance="outline" class="enum-select">
+                        <mat-select [value]="cap.deviceState.textValue">
+                            @for (option of cap.EnumExpose?.values; track option) {
+                            <mat-option [value]="option">{{ option }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    }
+                    @if (cap.type === 'binary') {
+                    <mat-slide-toggle>
+                    </mat-slide-toggle>
+                    {{ cap.deviceState.boolValue }}
+                    }
+                </span>
+            </div>
+            }
+        </mat-expansion-panel>
+    </mat-card-content>
+</mat-card>

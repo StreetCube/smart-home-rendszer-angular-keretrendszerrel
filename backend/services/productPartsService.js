@@ -1,5 +1,7 @@
 const models = require('../database/models').models;
 const MODEL_CONSTANTS = require('../constants/model.constants');
+const CustomError = require('../util/customError');
+const httpConstants = require('../constants/http.constants');
 const logger = require('../util/logger');
 
 /**
@@ -23,7 +25,7 @@ exports.createOrGetSupportedProduct = async (name, type, transaction) => {
     );
     if (exists) {
       logger.warn(`Supported product already exists with name: ${name}`);
-      return exists;
+      return { model: exists, new: false };
     }
     const newProduct = await models[
       MODEL_CONSTANTS.NAME.SUPPORTED_PRODUCT
@@ -34,10 +36,14 @@ exports.createOrGetSupportedProduct = async (name, type, transaction) => {
       },
       { transaction }
     );
-    return newProduct;
+    return { model: newProduct, new: true };
   } catch (error) {
     logger.error(`Error creating supported product: ${error.message}`);
-    throw error;
+    throw new CustomError(
+      'Error creating or getting supported product',
+      httpConstants.CUSTOM_CODE.API.ERROR_CREATING_RESOURCE,
+      httpConstants.CODE.INTERNAL_SERVER_ERROR
+    );
   }
 };
 
@@ -55,61 +61,137 @@ exports.createProductCapabilities = async (
   supportedProduct,
   transaction
 ) => {
-  for (const capabilitiy of capabilities) {
-    let binaryId = null;
-    let numericId = null;
-    let stringId = null;
-    switch (capabilitiy.type) {
-      case 'binary':
-        const binary = await models[MODEL_CONSTANTS.NAME.BINARY_EXPOSE].create(
-          {
-            value_on: capabilitiy.value_on,
-            value_off: capabilitiy.value_off,
-            value_toggle: capabilitiy.value_toggle,
-          },
-          { transaction }
-        );
-        binaryId = binary.id;
-        break;
-      case 'numeric':
-        const numeric = await models[
-          MODEL_CONSTANTS.NAME.NUMERIC_EXPOSE
-        ].create(
-          {
-            value_min: capabilitiy.value_min,
-            value_max: capabilitiy.value_max,
-            value_step: capabilitiy.value_step,
-            unit: capabilitiy.unit,
-          },
-          { transaction }
-        );
-        numericId = numeric.id;
-        break;
-      case 'enum':
-        const enumValue = await models[MODEL_CONSTANTS.NAME.ENUM_EXPOSE].create(
-          {
-            values: capabilitiy.values,
-          },
-          { transaction }
-        );
-        stringId = enumValue.id;
-        break;
-
-      default:
-        logger.warn(`Unsupported capability type: ${capabilitiy.type}`);
-        break;
+  try {
+    for (const capability of capabilities) {
+      const { binaryId, numericId, stringId } = await createExposeByType(
+        capability,
+        transaction
+      );
+      await createProductCapabilityRecord(
+        capability,
+        supportedProduct.id,
+        { binaryId, numericId, stringId },
+        transaction
+      );
     }
-    const capability = await models[
-      MODEL_CONSTANTS.NAME.PRODUCT_CAPABILITY
-    ].create(
+  } catch (error) {
+    logger.error('Error creating product capabilities:', error);
+    throw new CustomError(
+      'Error creating product capabilities',
+      httpConstants.CUSTOM_CODE.API.ERROR_CREATING_RESOURCE,
+      httpConstants.CODE.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+// Type-specific expose creators
+const createBinaryExpose = async (capability, transaction) => {
+  try {
+    const binary = await models[MODEL_CONSTANTS.NAME.BINARY_EXPOSE].create(
       {
-        ...capabilitiy,
-        BinaryExposeId: binaryId,
-        NumericExposeId: numericId,
-        EnumExposeId: stringId,
-        SupportedProductId: supportedProduct.id,
+        value_on: capability.value_on,
+        value_off: capability.value_off,
+        value_toggle: capability.value_toggle,
       },
       { transaction }
     );
+
+    return { binaryId: binary.id };
+  } catch (error) {
+    logger.error('Failed to create binary expose:', error);
+    throw new CustomError(
+      'Binary expose creation failed',
+      httpConstants.CUSTOM_CODE.API.ERROR_CREATING_RESOURCE,
+      httpConstants.CODE.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+const createNumericExpose = async (capability, transaction) => {
+  try {
+    const numeric = await models[MODEL_CONSTANTS.NAME.NUMERIC_EXPOSE].create(
+      {
+        value_min: capability.value_min,
+        value_max: capability.value_max,
+        value_step: capability.value_step,
+        unit: capability.unit,
+      },
+      { transaction }
+    );
+
+    return { numericId: numeric.id };
+  } catch (error) {
+    logger.error('Failed to create numeric expose:', error);
+    throw new CustomError(
+      'Numeric expose creation failed',
+      httpConstants.CUSTOM_CODE.API.ERROR_CREATING_RESOURCE,
+      httpConstants.CODE.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+const createEnumExpose = async (capability, transaction) => {
+  try {
+    const enumValue = await models[MODEL_CONSTANTS.NAME.ENUM_EXPOSE].create(
+      {
+        values: capability.values,
+      },
+      { transaction }
+    );
+
+    return { stringId: enumValue.id };
+  } catch (error) {
+    logger.error('Failed to create enum expose:', error);
+    throw new CustomError(
+      'Enum expose creation failed',
+      httpConstants.CUSTOM_CODE.API.ERROR_CREATING_RESOURCE,
+      httpConstants.CODE.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+// Main capability record creator
+const createProductCapabilityRecord = async (
+  capability,
+  supportedProductId,
+  { binaryId, numericId, stringId },
+  transaction
+) => {
+  try {
+    await models[MODEL_CONSTANTS.NAME.PRODUCT_CAPABILITY].create(
+      {
+        type: capability.type,
+        name: capability.name,
+        property: capability.property,
+        access: capability.access,
+        description: capability.description,
+        BinaryExposeId: binaryId,
+        NumericExposeId: numericId,
+        EnumExposeId: stringId,
+        SupportedProductId: supportedProductId,
+      },
+      { transaction }
+    );
+  } catch (error) {
+    logger.error('Failed to create product capability record:', error);
+    throw new CustomError(
+      'Product capability record creation failed',
+      httpConstants.CUSTOM_CODE.API.ERROR_CREATING_RESOURCE,
+      httpConstants.CODE.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+const createExposeByType = async (capability, transaction) => {
+  switch (capability.type) {
+    case 'binary':
+      return createBinaryExpose(capability, transaction);
+    case 'numeric':
+      return createNumericExpose(capability, transaction);
+    case 'enum':
+      return createEnumExpose(capability, transaction);
+    default:
+      logger.warn(`Unsupported capability type: ${capability.type}`);
+      return { binaryId: null, numericId: null, stringId: null };
   }
 };

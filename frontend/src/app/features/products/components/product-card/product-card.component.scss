@@ -1,0 +1,40 @@
+.device-card {
+  width: 350px;
+  margin: 24px auto;
+  border-radius: 16px;
+}
+
+.device-status-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 28px;
+  color: #ccc;
+
+  &.online mat-icon {
+    color: #43a047; // green
+  }
+  &.offline mat-icon {
+    color: #e53935; // red
+  }
+}
+
+.device-details {
+  margin-bottom: 8px;
+  font-size: 0.95em;
+  color: #444;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.capability-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+
+.cap-label {
+  font-weight: 500;
+}

@@ -8,5 +8,27 @@ export class TableColumnConstants {
         header: 'table_columns.room_name',
       },
     ],
+    PRODUCT: [
+      {
+        property_name: 'name',
+        header: 'table_columns.product_name',
+      },
+      {
+        property_name: 'Room.name',
+        header: 'table_columns.room_name',
+      },
+      {
+        property_name: 'SupportedProduct.product_type',
+        header: 'table_columns.product_type',
+      },
+      {
+        property_name: 'SupportedProduct.name',
+        header: 'table_columns.supportedProduct_name',
+      },
+      {
+        property_name: 'state',
+        header: 'table_columns.product_status',
+      },
+    ],
   };
 }

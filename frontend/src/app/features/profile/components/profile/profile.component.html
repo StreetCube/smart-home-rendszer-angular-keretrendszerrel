@@ -1,21 +1,36 @@
-<!-- profile.component.html -->
-<div class="profile-root">
-    <div class="profile-info">
-        <div class="profile-name">Jane Doe</div>
-        <div class="profile-email">email</div>
-        <div class="profile-meta"><b>Member since:</b> 2022-01-15</div>
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-details">
+            <div class="profile-name">{{ authService.user()?.username }}</div>
+            <div class="profile-email">{{ authService.user()?.email }}</div>
+            <div class="profile-meta">
+                <b>{{'profile.memberSince' | translate}}</b>
+                {{ authService.user()?.createdAt | date }}
+            </div>
+        </div>
     </div>
+
     <div class="profile-settings">
-        <div class="settings-title">Settings</div>
+        <div class="settings-title">{{'profile.settings.title' | translate}}</div>
         <mat-form-field appearance="outline" class="lang-select">
-            <mat-label>Language</mat-label>
+            <mat-label>{{'profile.settings.language' | translate}}</mat-label>
             <mat-select [value]="languageService.currentLanguage().code"
                 (selectionChange)="updateLanguage($event.value)">
-                <mat-option value="en">English</mat-option>
-                <mat-option value="hu">Magyar</mat-option>
+                <mat-select-trigger>
+                    <span class="flag-icon" [ngClass]="{
+                                'flag-icon-gb': languageService.currentLanguage().code === 'en',
+                                'flag-icon-hu': languageService.currentLanguage().code === 'hu'
+                              }"></span>
+                    {{ languageService.currentLanguage().code === 'en' ? 'English' : 'Magyar' }}
+                </mat-select-trigger>
+                <mat-option value="en">
+                    <span class="flag-icon flag-icon-gb"></span> English
+                </mat-option>
+                <mat-option value="hu">
+                    <span class="flag-icon flag-icon-hu"></span> Magyar
+                </mat-option>
             </mat-select>
         </mat-form-field>
-        <div class="settings-row"><b>Theme:</b> Light</div>
-        <div class="settings-row"><b>Notifications:</b> Enabled</div>
+
     </div>
 </div>

@@ -20,6 +20,7 @@
             "title": "Bejelentkezés",
             "username": "Felhasználónév",
             "password": "Jelszó",
+            "success": "Sikeres bejelentkezés",
             "loginButton": "Bejelentkezés",
             "forgotPassword": "Elfelejtette a jelszavát?",
             "noAccount": "Nincs fiókja?",
@@ -30,6 +31,7 @@
             "username": "Felhasználónév",
             "email": "E-mail",
             "password": "Jelszó",
+            "success": "Sikeres regisztráció",
             "confirmPassword": "Jelszó megerősítése",
             "registerButton": "Regisztráció",
             "alreadyHaveAccount": "Már van fiókja?",
@@ -52,7 +54,7 @@
     },
     "profile": {
         "title": "Profil",
-        "memberSince": "Tag mióta:",
+        "memberSince": "Tag ekkortól:",
         "settings": {
             "title": "Beállítások",
             "language": "Nyelv",
@@ -73,7 +75,8 @@
             "name": "Név",
             "createdAt": "Létrehozva",
             "updatedAt": "Frissítve"
-        }
+        },
+        "select_room": "Válasszon egy szobát"
     },
     "errors": {
         "notFound": "Az oldal nem található",
@@ -81,10 +84,17 @@
         "serverError": "Váratlan hiba történt. Kérjük, próbálja meg később.",
         "invalid_user_pass": "Érvénytelen felhasználónév vagy jelszó",
         "user_not_found": "Felhasználó nem található",
-        "default_error": "Hiba történt. Kérjük, próbálja meg újra."
+        "default_error": "Hiba történt. Kérjük, próbálja meg újra.",
+        "product_already_exists": "Az eszköz már létezik a rendszerben",
+        "product_default_error": "Hiba történt az eszköz létrehozásakor"
     },
     "table_columns": {
-        "room_name": "Szoba neve"
+        "room_name": "Szoba neve",
+        "product_name": "Eszköz neve",
+        "product_type": "Eszköz típusa",
+        "product_status": "Eszköz állapota",
+        "supportedProduct_name": "Eszköz (Modell - Címke)",
+        "product_status_hover": "Állapot"
     },
     "paginator": {
         "items_per_page": "Elemek oldalanként",
@@ -93,5 +103,24 @@
         "first_page": "Első oldal",
         "last_page": "Utolsó oldal",
         "of_label": "a(z)"
+    },
+    "create": {
+        "room": {
+            "title": "Szoba létrehozása",
+            "name": "Szoba neve",
+            "success": "A szoba sikeresen létrehozva",
+            "already_exists": "A szoba már létezik",
+            "uknown_error": "Ismeretlen hiba"
+        },
+        "product": {
+            "title": "Eszköz hozzáadása",
+            "name": "Eszköz neve",
+            "room": "Szoba",
+            "stop_inclusion": "Termék hozzáadás leállítása"
+        }
+    },
+    "actions": {
+        "save": "Mentés",
+        "cancel": "Mégse"
     }
 }

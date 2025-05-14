@@ -1,0 +1,23 @@
+<div class="rooms-container">
+    <div class="top-section">
+        <div class="button-and-spinner">
+            @if(!inclusionInProgress) {
+            <button mat-raised-button color="primary" (click)="openCreateDialog()"
+                [disabled]="inclusionInProgress">{{'create.product.title' | translate}}</button>
+            }
+            @if (inclusionInProgress) {
+            <div class="loading-inline">
+                <mat-spinner diameter="32"></mat-spinner>
+                <p class="loading-text">Inclusion in progress!</p>
+            </div>
+            <button mat-raised-button color="primary">{{'create.product.stop_inclusion' | translate}}</button>
+            }
+        </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="bottom-section">
+        <div class="table-wrapper">
+            <app-table [data]="products" [columns]="columns"></app-table>
+        </div>
+    </div>
+</div>

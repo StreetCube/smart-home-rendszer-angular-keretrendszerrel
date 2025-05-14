@@ -167,7 +167,13 @@ const validateUser = async (
 
 exports.signJwt = (user, res) => {
   const token = jwt.sign(
-    { username: user.username, id: user.id, permission: user.permission },
+    {
+      username: user.username,
+      id: user.id,
+      email: user.email,
+      permission: user.permission,
+      createdAt: user.createdAt,
+    },
     JWT_SECRET,
     {
       expiresIn: '1d',

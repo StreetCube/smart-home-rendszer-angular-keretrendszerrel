@@ -16,6 +16,8 @@ exports.ROUTES = Object.freeze({
   CRUD: {
     CREATE: `/create`,
     GET_ALL: '/get-all',
+    ROOMS_WITH_PRODUCT_NUMBERS: '/rooms-with-product-numbers',
+    GET_PRODUCTS_FOR_ROOM: '/:roomId/products',
   },
   DEVICE: {
     INCLUDE: '/include',

@@ -1,4 +1,6 @@
 import { UserAfterCreate } from '../../features/auth/types/User';
+import { ProductForRoom } from '../../features/products/types/Product';
+import { RoomWithProductNumbers } from '../../features/rooms/types/Room';
 
 type EndpointCodes = {
   all: CombinedCustomCode;
@@ -12,6 +14,18 @@ type EndpointCodes = {
   get_all: GeneralCustomCode.SUCCESS | ApiCustomCode.ERROR_GETTING_RESOURCE;
   status: GeneralCustomCode.SUCCESS | AuthCustomCode.INVALID_TOKEN | AuthCustomCode.NO_TOKEN_FOUND;
   logout: GeneralCustomCode.SUCCESS | AuthCustomCode.NO_TOKEN_FOUND;
+  create:
+    | GeneralCustomCode.CREATED
+    | GeneralCustomCode.OTHER
+    | GeneralCustomCode.BAD_REQUEST
+    | ApiCustomCode.ALREADY_EXISTS;
+  include:
+    | GeneralCustomCode.CREATED
+    | GeneralCustomCode.BAD_REQUEST
+    | ApiCustomCode.ERROR_CREATING_RESOURCE
+    | ApiCustomCode.ALREADY_EXISTS;
+  room_with_product_numbers: GeneralCustomCode.SUCCESS | ApiCustomCode.ERROR_GETTING_RESOURCE;
+  products_for_room: GeneralCustomCode.SUCCESS | GeneralCustomCode.BAD_REQUEST | ApiCustomCode.ERROR_GETTING_RESOURCE;
 };
 
 type DataForResponses = {
@@ -21,6 +35,10 @@ type DataForResponses = {
   status: UserAfterCreate & { iat: number; exp: number; isAuthenticated: true };
   all: any;
   logout: any;
+  create: any;
+  include: any;
+  room_with_product_numbers: RoomWithProductNumbers[];
+  products_for_room: ProductForRoom[] | null;
 };
 
 type ErrorCodeFor<E extends keyof EndpointCodes> = EndpointCodes[E];
@@ -47,7 +65,9 @@ export enum AuthCustomCode {
 }
 
 export enum ApiCustomCode {
+  ALREADY_EXISTS = 2001,
   ERROR_GETTING_RESOURCE = 2002, // Error getting resource from the API
+  ERROR_CREATING_RESOURCE = 2003, // Error creating resource in the API
 }
 
 export enum GeneralCustomCode {

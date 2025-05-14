@@ -1,0 +1,7 @@
+<div class="product-cards-container">
+    @for (product of selectedRoomData; track $index) {
+    <div class="product-card">
+        <app-product-card [product]="product"></app-product-card>
+    </div>
+    }
+</div>

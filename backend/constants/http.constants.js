@@ -6,6 +6,10 @@ exports.CODE = Object.freeze({
   UNAUTHORIZED: 401, // Authentication required or failed
   FORBIDDEN: 403, // Access denied to the requested resource
   NOT_FOUND: 404, // Resource not found
+  METHOD_NOT_ALLOWED: 405, // HTTP method not allowed for the resource
+  NOT_ACCEPTABLE: 406, // Requested resource not acceptable
+  PROXY_AUTHENTICATION_REQUIRED: 407, // Proxy authentication required
+  REQUEST_TIMEOUT: 408, // Request timed out
   CONFLICT: 409, // Conflict with the current state of the resource
   INTERNAL_SERVER_ERROR: 500, // Server encountered an error
 });
@@ -29,5 +33,9 @@ exports.CUSTOM_CODE = Object.freeze({
   GENERAL: {
     BAD_REQUEST: 3333, // General bad request error
     OTHER: 9999, // Other general errors
+  },
+  ZIGBEE: {
+    INCLUSION_TIMEOUT: 3001, // Inclusion process timed out
+    DEVICE_ADDED: 3002, // Device added successfully
   },
 });

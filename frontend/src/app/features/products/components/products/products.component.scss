@@ -1,0 +1,76 @@
+.rooms-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: flex-end;
+}
+
+.top-section {
+  flex: 0 0 auto;
+  flex-direction: column;
+  display: flex;
+  margin-top: 20vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.bottom-section {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  max-height: 40vh;
+  overflow: hidden;
+}
+
+.table-wrapper {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.loading-inline {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 16px; // Space from the button if needed
+}
+
+.loading-text {
+  margin-top: 6px;
+  font-size: 1rem;
+  color: #1976d2; // Primary color, adjust as needed
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .top-section {
+    margin-top: 10vh;
+    height: 12%;
+  }
+  .bottom-section {
+    max-height: 50vh;
+  }
+}
+
+@media (max-width: 600px) {
+  .rooms-container {
+    height: 100dvh; // Use dynamic viewport for mobile browsers
+  }
+  .top-section {
+    margin-top: 4vh;
+    height: 16%;
+    flex-direction: column;
+    padding: 0 4px;
+  }
+  .bottom-section {
+    max-height: 60vh;
+    padding: 0 2px;
+  }
+  .table-wrapper {
+    padding-bottom: 56px; // Space for sticky paginator if needed
+  }
+}

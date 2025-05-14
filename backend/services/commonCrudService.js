@@ -28,23 +28,27 @@ exports.checkExistingElementsForCreation = async (modelName, body) => {
       findWhere = UserCrudService.createWhereOptionForCreation(body);
       errorCode = HTTP_CONSTANTS.CUSTOM_CODE.AUTH.USER_ALREADY_EXISTS;
       break;
+    case MODEL_CONSTANTS.NAME.ROOM:
+      logger.debug(`[${TAG}] Preparing where condition for Room model`);
+      findWhere = {
+        name: body.name,
+        UserId: body.UserId,
+      };
+      break;
+
     default:
       break;
   }
-  if (modelName === MODEL_CONSTANTS.NAME.USER) {
-    logger.debug(`[${TAG}] Preparing where condition for User model`);
-    findWhere = UserCrudService.createWhereOptionForCreation(body);
-    errorCode = HTTP_CONSTANTS.CUSTOM_CODE.AUTH.USER_ALREADY_EXISTS;
-  }
-
-  const foundItems = await models[modelName].findAll({ where: findWhere });
-  if (foundItems.length > 0) {
-    logger.warn(`[${TAG}] Element already exists for model: ${modelName}`);
-    throw new CustomError(
-      'Already exists',
-      errorCode,
-      HTTP_CONSTANTS.CODE.CONFLICT
-    );
+  if (Object.keys(findWhere).length !== 0) {
+    const foundItems = await models[modelName].findAll({ where: findWhere });
+    if (foundItems.length > 0) {
+      logger.warn(`[${TAG}] Element already exists for model: ${modelName}`);
+      throw new CustomError(
+        'Already exists',
+        errorCode || HTTP_CONSTANTS.CUSTOM_CODE.API.ALREADY_EXISTS,
+        HTTP_CONSTANTS.CODE.CONFLICT
+      );
+    }
   }
 
   logger.info(`[${TAG}] No existing elements found for model: ${modelName}`);
@@ -64,10 +68,20 @@ exports.CheckAdditionalCreationParams = async (modelName, body) => {
     `[${TAG}] Checking additional creation parameters for model: ${modelName}`
   );
   try {
+    switch (modelName) {
+      case MODEL_CONSTANTS.NAME.USER:
+        logger.debug(
+          `[${TAG}] Validating additional parameters for User model`
+        );
+        return authController.checkDataForRegistration(body);
+      default:
+        break;
+    }
     if (modelName === MODEL_CONSTANTS.NAME.USER) {
       logger.debug(`[${TAG}] Validating additional parameters for User model`);
       return authController.checkDataForRegistration(body);
     }
+    return true;
   } catch (error) {
     logger.error(
       `[${TAG}] Error while checking additional parameters: ${error.message}`

@@ -5,6 +5,7 @@ const mqtt = require('./mqttController').subscriptionManager;
 const logger = require('../util/logger');
 const { getZigbeeDeviceProperties } = require('../util/utils');
 const productCrudService = require('../services/productCrudService');
+const deviceStateCrudService = require('../services/deviceStateCrudService');
 const { ACCESS } = require('../constants/zigbee2mqtt.constants');
 /**
  * @typedef {import('zigbee2mqtt/dist/types/api').Zigbee2MQTTDevice} Zigbee2MQTTDevice
@@ -83,7 +84,7 @@ class ZigbeeDevice extends EventEmitter {
         logger.debug(
           '[_determineDeviceType]',
           'Device type determined as',
-          this.type
+          property.specificType
         );
         return property.specificType;
       }
@@ -117,6 +118,10 @@ class ZigbeeDevice extends EventEmitter {
       payload
     );
     this.state = { ...this.state, ...payload };
+    deviceStateCrudService.createDeviceStateForProduct(
+      this.ieeeAddress,
+      payload
+    );
     this.emit(ZIGBEE2MQTT_EVENTS.DEVICE_STATE_CHANGE, payload);
   }
 

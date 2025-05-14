@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --ignore mqtt/config/* server.js | bunyan --color",
     "seed:all": "npx sequelize-cli db:seed:all",
+    "migrate": "npx sequelize-cli db:migrate",
     "start-mqtt-broker": "docker-compose up -d mqtt_broker",
     "start_z2mq": "docker-compose up -d zigbee2mqtt_windows"
   },

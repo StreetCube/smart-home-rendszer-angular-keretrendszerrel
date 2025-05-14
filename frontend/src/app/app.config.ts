@@ -1,5 +1,6 @@
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, inject, provideAppInitializer } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
       defaultLanguage: 'en',
     }),
     provideRouter(routes),
+    provideAnimations(),
     // New Angular 19+ app initializer pattern
     provideAppInitializer(() => {
       const authService = inject(AuthService);

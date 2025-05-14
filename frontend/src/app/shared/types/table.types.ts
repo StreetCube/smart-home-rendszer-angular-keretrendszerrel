@@ -3,6 +3,7 @@ export interface TableColumn {
   header: string;
   sortable?: boolean;
   hide?: boolean;
+  onHover?: string;
 }
 
 export interface RowAction {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, inject, Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 import { MODEL_PART_NAME } from '../../constants/model-part-name.token';
 import { RouteConstants } from '../../route.constants';
 import { GeneralHttpResponse } from '../../types/generalHttpResponse';
@@ -12,12 +12,18 @@ export class CrudService<T> {
   constructor(@Inject(MODEL_PART_NAME) protected modelPartName: string) {
     this.modelPartName = modelPartName;
   }
-  private http = inject(HttpClient);
+  protected http = inject(HttpClient);
 
-  // public create(item: T): Observable<T & EntityMetadata & { hubId: UUID }> {
-  //   return this.http.post<T & EntityMetadata & { hubId: UUID }>(ApiV1Constants.Crud.CREATE(this.modelPartName), item);
-  // }
+  public dataChanged: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
 
+  public create<R = T, P = T>(item: P): Observable<GeneralHttpResponse<'create', R>> {
+    return this.http.post<GeneralHttpResponse<'create', R>>(RouteConstants.CRUD.CREATE(this.modelPartName), item).pipe(
+      tap((response) => {
+        this.dataChanged.next();
+      }),
+      catchError((error: GeneralHttpResponse<'create', R>) => of(error))
+    );
+  }
   public getAll<R = T>(): Observable<GeneralHttpResponse<'get_all', R[]>> {
     return this.http.get<GeneralHttpResponse<'get_all', R[]>>(RouteConstants.CRUD.GET_ALL(this.modelPartName)).pipe(
       catchError((error: GeneralHttpResponse<'get_all', R[]>) => {
