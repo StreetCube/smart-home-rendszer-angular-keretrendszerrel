@@ -4,8 +4,8 @@ export interface DynamicFormField {
   key: string;
   label?: string;
   type?: 'text' | 'email' | 'number' | 'select' | 'checkbox';
-  options?: { value: string; label: string }[]; // For select
-  hidden?: boolean; // If true, don't display but keep in form
+  options?: { value: string; label: string }[];
+  hidden?: boolean;
   initialValue?: any;
-  validators?: ValidatorFn[]; // <-- Add this line
+  validators?: ValidatorFn[];
 }

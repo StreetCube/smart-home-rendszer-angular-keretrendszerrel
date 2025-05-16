@@ -54,8 +54,6 @@ export class CreateDialogConstants {
       ],
     };
   }
-
-  // ...existing code...
   public static UPDATE: {
     ROOM: (data: Room) => CreateDialogData;
     PRODUCT: (data: Product_GetAllResponse, selectOptions: { value: string; label: string }[]) => CreateDialogData;
@@ -103,9 +101,7 @@ export class CreateDialogConstants {
           initialValue: data?.RoomId ?? '',
           hidden: false,
         },
-        // Add more fields as needed for PRODUCT
       ],
     }),
   };
-  // ...existing code...
 }

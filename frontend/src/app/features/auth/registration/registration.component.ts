@@ -46,7 +46,6 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // Submit handler
   submit() {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.getRawValue()).subscribe({

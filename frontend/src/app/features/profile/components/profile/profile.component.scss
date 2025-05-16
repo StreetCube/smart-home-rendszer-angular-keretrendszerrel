@@ -58,7 +58,6 @@
   .lang-select {
     width: 100%;
 
-    
     ::ng-deep .mat-form-field-outline {
       border-radius: 12px;
       border-width: 2px;
@@ -88,7 +87,7 @@
   }
 }
 
-
+// Flag icons (use a flag icon library or SVGs)
 .flag-icon {
   display: inline-block;
   width: 22px;
@@ -101,8 +100,8 @@
 }
 
 .flag-icon-gb {
-  background-image: url('https:
+  background-image: url('https://cdn.jsdelivr.net/npm/flag-icon-css@4.1.7/flags/4x3/gb.svg');
 }
 .flag-icon-hu {
-  background-image: url('https:
+  background-image: url('https://cdn.jsdelivr.net/npm/flag-icon-css@4.1.7/flags/4x3/hu.svg');
 }
