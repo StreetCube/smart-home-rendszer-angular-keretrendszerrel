@@ -4,19 +4,44 @@ const logger = require('../util/logger');
 const models = require('../database/models').models;
 const sequelize = require('../database/sequelize');
 
+/**
+ * Creates device state entries for a product based on its capabilities and new state data.
+ * Only creates new states if the value has changed.
+ *
+ * @async
+ * @param {string} ieeeAddress - The IEEE address of the product.
+ * @param {Object} deviceStateData - Key-value pairs of capability property names and their new values.
+ * @returns {Promise<void>}
+ */
 exports.createDeviceStateForProduct = async (ieeeAddress, deviceStateData) => {
   try {
     const product = await getProductWithCapabilities(ieeeAddress);
+    if (!product) {
+      logger.warn(`Product with IEEE address ${ieeeAddress} not found`);
+      return;
+    }
 
     const latestStates = await getLatestDeviceStates(product);
+    if (!latestStates) {
+      logger.warn(`No latest device states found for product ${ieeeAddress}`);
+      return;
+    }
 
     const currentStates = await getCurrentDeviceStates(latestStates);
+    if (!currentStates) {
+      logger.warn(`No current device states found for product ${ieeeAddress}`);
+      return;
+    }
 
     const statesToCreate = generateDeviceStatesToCreate(
       product,
       currentStates,
       deviceStateData
     );
+    if (statesToCreate && statesToCreate.length === 0) {
+      logger.info('No changes detected in device states');
+      return;
+    }
 
     await createDeviceStates(statesToCreate);
 
@@ -26,7 +51,12 @@ exports.createDeviceStateForProduct = async (ieeeAddress, deviceStateData) => {
   }
 };
 
-// 1. Fetch product with capabilities
+/**
+ * Fetches a product by IEEE address, including its supported product and capabilities.
+ * @async
+ * @param {string} ieeeAddress - The IEEE address of the product.
+ * @returns {Promise<Object>} The product with included supported product and capabilities.
+ */
 async function getProductWithCapabilities(ieeeAddress) {
   return models[MODEL_CONSTANTS.NAME.PRODUCT].findOne({
     where: { ieeeAddress },
@@ -43,12 +73,22 @@ async function getProductWithCapabilities(ieeeAddress) {
   });
 }
 
-// 2. Get latest timestamps per capability
+/**
+ * Gets the latest device state timestamps for each capability of a product.
+ * @async
+ * @param {Object} product - The product object.
+ * @param {Array<string>} [capabilityIds] - Optional array of capability IDs.
+ * @returns {Promise<Array<{ProductCapabilityId: string, latest_at: string}>>}
+ */
 const getLatestDeviceStates = async (product, capabilityIds) => {
   if (!capabilityIds) {
-    capabilityIds = product.SupportedProduct.ProductCapabilities.map(
-      (pc) => pc.id
-    );
+    if (product) {
+      capabilityIds = product.SupportedProduct.ProductCapabilities.map(
+        (pc) => pc.id
+      );
+    } else {
+      return;
+    }
   }
 
   return models[MODEL_CONSTANTS.NAME.DEVICE_STATE].findAll({
@@ -64,7 +104,12 @@ const getLatestDeviceStates = async (product, capabilityIds) => {
 
 exports.getLatestDeviceStates = getLatestDeviceStates;
 
-// 3. Get current device states
+/**
+ * Gets the current (latest) device state rows for each capability.
+ * @async
+ * @param {Array<Object>} latestStates - Array of objects with ProductCapabilityId and latest_at.
+ * @returns {Promise<Array<Object>>} Array of device state rows.
+ */
 async function getCurrentDeviceStates(latestStates) {
   return models[MODEL_CONSTANTS.NAME.DEVICE_STATE].findAll({
     where: {
@@ -77,7 +122,13 @@ async function getCurrentDeviceStates(latestStates) {
   });
 }
 
-// 4. Generate device state creation DTOs
+/**
+ * Generates an array of device state DTOs to create, only for changed values.
+ * @param {Object} product - The product object.
+ * @param {Array<Object>} currentStates - Array of current device state rows.
+ * @param {Object} deviceStateData - Key-value pairs of capability property names and their new values.
+ * @returns {Array<Object>} Array of device state DTOs to create.
+ */
 function generateDeviceStatesToCreate(product, currentStates, deviceStateData) {
   return Object.keys(deviceStateData)
     .map((property) => {
@@ -101,7 +152,11 @@ function generateDeviceStatesToCreate(product, currentStates, deviceStateData) {
     .filter(Boolean);
 }
 
-// Helper: Determine value type from capability
+/**
+ * Determines the value type key for a capability.
+ * @param {Object} capability - The capability object.
+ * @returns {string} The value type key ('textValue', 'numericValue', or 'boolValue').
+ */
 function getValueType(capability) {
   return capability.EnumExposeId
     ? 'textValue'
@@ -110,7 +165,14 @@ function getValueType(capability) {
     : 'boolValue';
 }
 
-// Helper: Create state data transfer object
+/**
+ * Creates a device state DTO for insertion.
+ * @param {Object} capability - The capability object.
+ * @param {string} productId - The product ID.
+ * @param {string} valueType - The value type key.
+ * @param {*} value - The value to set.
+ * @returns {Object} The device state DTO.
+ */
 function createStateDTO(capability, productId, valueType, value) {
   return {
     ProductCapabilityId: capability.id,
@@ -122,7 +184,12 @@ function createStateDTO(capability, productId, valueType, value) {
   };
 }
 
-// 5. Bulk create device states
+/**
+ * Bulk creates device state entries.
+ * @async
+ * @param {Array<Object>} statesToCreate - Array of device state DTOs to create.
+ * @returns {Promise<void>}
+ */
 async function createDeviceStates(statesToCreate) {
   if (statesToCreate.length === 0) {
     logger.info('No new device states to create');

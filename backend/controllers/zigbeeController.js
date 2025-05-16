@@ -21,12 +21,36 @@ exports.start = () => {
   driver = new zigbeeDriver();
   driver.on(ZIGBEE2MQTT_EVENTS.READY, () => {
     logger.info('Zigbee2MQTT is ready');
-
-    driver.on(ZIGBEE2MQTT_EVENTS.DEVICES_LIST_UPDATE, async () => {
-      for (const device of driver.getDevices()) {
-      }
-    });
   });
+};
+
+exports.sendCommandToDevice = (req, res) => {
+  try {
+    const { property, value, ieeeAddress } = req.body;
+
+    if (!property || !value || !ieeeAddress) {
+      return res.status(httpConstants.CODE.BAD_REQUEST).json({
+        message: 'Invalid data provided',
+        code: httpConstants.CUSTOM_CODE.GENERAL.BAD_REQUEST,
+      });
+    }
+    driver.getDeviceByAddress(ieeeAddress).sendCommand(property, value);
+    res.status(httpConstants.CODE.OK).json({
+      message: 'Command sent successfully',
+      code: httpConstants.CUSTOM_CODE.ZIGBEE.COMMAND_SENT,
+    });
+  } catch (error) {
+    if (error instanceof CustomError) {
+      return res
+        .status(error.httpStatus || httpConstants.CODE.BAD_REQUEST)
+        .json({ message: error.message, code: error.code });
+    } else {
+      return res.status(httpConstants.CODE.INTERNAL_SERVER_ERROR).json({
+        message: 'Error including device',
+        code: httpConstants.CODE.INTERNAL_SERVER_ERROR,
+      });
+    }
+  }
 };
 
 exports.includeDevice = async (req, res) => {
@@ -51,8 +75,6 @@ exports.includeDevice = async (req, res) => {
       });
     }
   }
-
-  driver.startInclusion();
   const timeout = setTimeout(() => {
     driver.stopInclusion();
     driver.removeListener(ZIGBEE2MQTT_EVENTS.DEVICE_ADDED, onDeviceAdded);
@@ -61,7 +83,6 @@ exports.includeDevice = async (req, res) => {
       code: httpConstants.CUSTOM_CODE.ZIGBEE.INCLUSION_TIMEOUT,
     });
   }, 60000);
-
   const onDeviceAdded = async (device) => {
     clearTimeout(timeout);
     logger.info('Device added:', device.ieeeAddress);
@@ -75,6 +96,7 @@ exports.includeDevice = async (req, res) => {
       await createProduct(req.body, device, supportedProduct.model, t);
 
       await t.commit();
+      driver.removeListener(ZIGBEE2MQTT_EVENTS.DEVICE_ADDED, onDeviceAdded);
       res.status(201).json({
         message: 'Device included successfully',
         code: httpConstants.CUSTOM_CODE.ZIGBEE.DEVICE_ADDED,
@@ -84,6 +106,7 @@ exports.includeDevice = async (req, res) => {
       driver.removeDevice(device.ieeeAddress, true);
       driver.stopInclusion();
       logger.error(`Error creating product: ${error.message}`);
+      driver.removeListener(ZIGBEE2MQTT_EVENTS.DEVICE_ADDED, onDeviceAdded);
       if (error instanceof CustomError) {
         res
           .status(error.httpStatus || httpConstants.CODE.INTERNAL_SERVER_ERROR)
@@ -95,10 +118,9 @@ exports.includeDevice = async (req, res) => {
         });
       }
     }
-    driver.removeListener(ZIGBEE2MQTT_EVENTS.DEVICE_ADDED, onDeviceAdded);
   };
-
   setEventOnlyOnce(driver, ZIGBEE2MQTT_EVENTS.DEVICE_ADDED, onDeviceAdded);
+  driver.startInclusion();
 };
 
 const createSupportedProduct = async (device, transaction) => {
@@ -162,6 +184,10 @@ exports.excludeDevice = (req, res) => {
   } else {
     res.status(404).json({ message: 'Device not found' });
   }
+};
+
+exports.removeDevice = async (ieeeAddress) => {
+  driver.removeDevice(ieeeAddress);
 };
 
 exports.getStateOfDevice = (ieeeAddress) => {

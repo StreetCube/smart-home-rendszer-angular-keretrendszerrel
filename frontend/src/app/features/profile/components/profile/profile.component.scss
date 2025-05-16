@@ -1,8 +1,8 @@
 .profile-container {
   max-width: 400px;
   margin: 40px auto;
-  background: linear-gradient(135deg, #e0f7fa 0%, #b2dfdb 100%);
   border-radius: 20px;
+  background: #fff;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
   padding: 32px 24px;
   display: flex;
@@ -17,7 +17,6 @@
 }
 
 .profile-avatar {
-  background: linear-gradient(135deg, #26c6da 0%, #009688 100%);
   border-radius: 50%;
   width: 64px;
   height: 64px;
@@ -59,7 +58,7 @@
   .lang-select {
     width: 100%;
 
-    // Modernize the mat-select
+    
     ::ng-deep .mat-form-field-outline {
       border-radius: 12px;
       border-width: 2px;
@@ -89,7 +88,7 @@
   }
 }
 
-// Flag icons (use a flag icon library or SVGs)
+
 .flag-icon {
   display: inline-block;
   width: 22px;
@@ -102,8 +101,8 @@
 }
 
 .flag-icon-gb {
-  background-image: url('https://cdn.jsdelivr.net/npm/flag-icon-css@4.1.7/flags/4x3/gb.svg');
+  background-image: url('https:
 }
 .flag-icon-hu {
-  background-image: url('https://cdn.jsdelivr.net/npm/flag-icon-css@4.1.7/flags/4x3/hu.svg');
+  background-image: url('https:
 }

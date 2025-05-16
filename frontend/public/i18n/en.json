@@ -94,7 +94,9 @@
         "product_type": "Product Type",
         "product_status": "Product Status",
         "supportedProduct_name": "Device (Model - Label)",
-        "product_status_hover": "Status"
+        "product_status_hover": "Status",
+        "created_at": "Created At",
+        "updated_at": "Updated At"
     },
     "paginator": {
         "items_per_page": "Items per page",
@@ -110,17 +112,53 @@
             "name": "Room Name",
             "success": "Room created successfully",
             "already_exists": "Room name already exists",
-            "uknown_error": "Unknown error"
+            "unknown_error": "Unknown error"
         },
         "product": {
             "title": "Add Product",
             "name": "Product Name",
             "room": "Room",
-            "stop_inclusion": "Stop Inclusion"
+            "stop_inclusion": "Stop Inclusion",
+            "show_capabilities": "Show Capabilities",
+            "link_quality": "Link Quality",
+            "set_value": "Set Value",
+            "value": "Value",
+            "min": "Min",
+            "max": "Max"
+        }
+    },
+    "update": {
+        "room": {
+            "title": "Update Room",
+            "success": "Room updated successfully",
+            "already_exists": "Room name already exists",
+            "unknown_error": "Unknown error"
+        },
+        "product": {
+            "title": "Update Product",
+            "success": "Product updated successfully",
+            "already_exists": "Product name already exists",
+            "unknown_error": "Unknown error"
+        }
+    },
+    "delete": {
+        "product": {
+            "error": "An error occurred while deleting the product",
+            "success": "Product deleted successfully",
+            "title": "Delete Product",
+            "text": "Are you sure you want to delete this product? This action cannot be undone."
+        },
+        "room": {
+            "error": "An error occurred while deleting the room",
+            "success": "Room deleted successfully",
+            "title": "Delete Room",
+            "text": "Are you sure you want to delete this room? All products in this room will also be deleted."
         }
     },
     "actions": {
         "save": "Save",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "delete": "Delete"
     }
 }

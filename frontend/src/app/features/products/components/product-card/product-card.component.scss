@@ -1,7 +1,8 @@
 .device-card {
   width: 350px;
-  margin: 24px auto;
+  margin: 32px auto;
   border-radius: 16px;
+  padding: 5px;
 }
 
 .device-status-icon {
@@ -12,29 +13,79 @@
   color: #ccc;
 
   &.online mat-icon {
-    color: #43a047; // green
+    color: #43a047;
   }
   &.offline mat-icon {
-    color: #e53935; // red
+    color: #e53935;
   }
 }
 
 .device-details {
-  margin-bottom: 8px;
-  font-size: 0.95em;
+  margin-bottom: 16px;
+  font-size: 1em;
   color: #444;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 8px;
+}
+
+.capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px 24px;
+  width: 100%;
+  margin-top: 8px;
 }
 
 .capability-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 8px 0;
+  margin: 0;
+  padding: 8px 0;
+  background: none;
+  border-radius: 6px;
 }
 
 .cap-label {
   font-weight: 500;
+}
+
+.compact-select {
+  max-width: 110px;
+  font-size: 13px;
+  margin: 0 0.5em 8px 0;
+  height: 36px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.compact-select .mat-form-field-wrapper,
+.compact-select .mat-form-field-flex,
+.compact-select .mat-form-field-outline {
+  padding: 0 !important;
+  min-height: 32px !important;
+  height: 32px !important;
+}
+
+.compact-select .mat-select-trigger {
+  font-size: 13px !important;
+  min-height: 28px !important;
+  height: 28px !important;
+  padding: 0 8px !important;
+  display: flex;
+  align-items: center;
+}
+
+.compact-select .mat-form-field-label {
+  font-size: 12px !important;
+}
+
+.compact-select .mat-select-arrow {
+  font-size: 18px;
+}
+
+::ng-deep .mat-select-panel {
+  font-size: 13px;
+  min-width: 110px !important;
 }

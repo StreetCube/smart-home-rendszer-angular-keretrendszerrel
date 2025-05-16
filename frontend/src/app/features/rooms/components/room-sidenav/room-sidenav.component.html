@@ -1,5 +1,5 @@
 <mat-sidenav-container class="container">
-    <mat-sidenav mode="side" opened position="start" class="sidenav">
+    <mat-sidenav #sidenav mode="side" [opened]="sidenavOpened" position="start" [mode]="sidenavMode" class="sidenav">
         <ng-scrollbar [trackClass]="'scroll_track'" [thumbClass]="'scroll_thumb'" [buttonClass]="'scroll_button'"
             [appearance]="'compact'">
             <div class="room-cards">
@@ -18,6 +18,15 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
+        <button mat-icon-button style="background-color: aliceblue;" (click)="sidenav.toggle()">
+            <mat-icon>
+                {{
+                sidenavMode === 'side'
+                ? (sidenav.opened ? 'arrow_left' : 'arrow_right')
+                : 'arrow_right'
+                }}
+            </mat-icon>
+        </button>
         @if (selectedRoom) {
         <div [@roomTransition]="selectedRoom.id">
             <app-room [roomId]="selectedRoom.id"></app-room>

@@ -94,7 +94,9 @@
         "product_type": "Eszköz típusa",
         "product_status": "Eszköz állapota",
         "supportedProduct_name": "Eszköz (Modell - Címke)",
-        "product_status_hover": "Állapot"
+        "product_status_hover": "Állapot",
+        "created_at": "Létrehozva",
+        "updated_at": "Módosítva"
     },
     "paginator": {
         "items_per_page": "Elemek oldalanként",
@@ -110,17 +112,49 @@
             "name": "Szoba neve",
             "success": "A szoba sikeresen létrehozva",
             "already_exists": "A szoba már létezik",
-            "uknown_error": "Ismeretlen hiba"
+            "unknown_error": "Ismeretlen hiba"
         },
         "product": {
             "title": "Eszköz hozzáadása",
             "name": "Eszköz neve",
             "room": "Szoba",
-            "stop_inclusion": "Termék hozzáadás leállítása"
+            "stop_inclusion": "Termék hozzáadás leállítása",
+            "show_capabilities": "Eszköz Állapotok",
+            "link_quality": "Link minőség",
+            "set_value": "Érték állítása",
+            "value": "Érték",
+            "min": "Min",
+            "max": "Max"
+        }
+    },
+    "update": {
+        "room": {
+            "title": "Szoba módosítása",
+            "success": "A szoba sikeresen módosítva",
+            "already_exists": "Ilyen nevű szoba már létezik",
+            "unknown_error": "Ismeretlen hiba"
+        },
+        "product": {
+            "title": "Eszköz módosítása",
+            "success": "Az eszköz sikeresen módosítva",
+            "already_exists": "Ilyen nevű eszköz már létezik a szobában",
+            "unknown_error": "Ismeretlen hiba"
+        }
+    },
+    "delete": {
+        "product": {
+            "error": "Hiba történt az eszköz törlésekor",
+            "success": "Az eszköz sikeresen törölve"
+        },
+        "room": {
+            "error": "Hiba történt a szoba törlésekor",
+            "success": "A szoba sikeresen törölve"
         }
     },
     "actions": {
         "save": "Mentés",
-        "cancel": "Mégse"
+        "cancel": "Mégse",
+        "edit": "Szerkesztés",
+        "delete": "Törlés"
     }
 }

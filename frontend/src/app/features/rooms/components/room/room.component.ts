@@ -1,4 +1,5 @@
-import { Component, effect, inject, input, OnInit } from '@angular/core';
+import { Component, effect, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
 import { ProductCardComponent } from '../../../products/components/product-card/product-card.component';
 import { ProductService } from '../../../products/services/product.service';
 import { ProductForRoom } from '../../../products/types/Product';
@@ -9,10 +10,14 @@ import { ProductForRoom } from '../../../products/types/Product';
   templateUrl: './room.component.html',
   styleUrl: './room.component.scss',
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent implements OnInit, OnDestroy {
   public roomId = input.required<string>();
   private productService = inject(ProductService);
   public selectedRoomData!: ProductForRoom[] | null;
+
+  // Custom signal for manual/periodic refresh
+  private refreshSignal = signal(0);
+  private refreshSub?: Subscription;
 
   constructor() {
     effect(() => {
@@ -23,8 +28,21 @@ export class RoomComponent implements OnInit {
           console.error('Error fetching room data:', res);
         }
       });
+      this.refreshSignal();
     });
   }
 
-  ngOnInit(): void {}
+  triggerRefresh() {
+    this.refreshSignal.update((v) => v + 1);
+  }
+
+  ngOnInit(): void {
+    this.refreshSub = interval(15000).subscribe(() => this.triggerRefresh());
+  }
+
+  ngOnDestroy() {
+    if (this.refreshSub) {
+      this.refreshSub.unsubscribe();
+    }
+  }
 }

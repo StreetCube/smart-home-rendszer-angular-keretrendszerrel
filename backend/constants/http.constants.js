@@ -12,6 +12,9 @@ exports.CODE = Object.freeze({
   REQUEST_TIMEOUT: 408, // Request timed out
   CONFLICT: 409, // Conflict with the current state of the resource
   INTERNAL_SERVER_ERROR: 500, // Server encountered an error
+  NOT_IMPLEMENTED: 501, // Server does not support the requested functionality
+  BAD_GATEWAY: 502, // Invalid response from upstream server
+  SERVICE_UNAVAILABLE: 503, // Service is temporarily unavailable
 });
 
 exports.CUSTOM_CODE = Object.freeze({
@@ -32,6 +35,7 @@ exports.CUSTOM_CODE = Object.freeze({
   },
   GENERAL: {
     BAD_REQUEST: 3333, // General bad request error
+    CONCURRENCY_LIMIT: 3334, // Too many concurrent requests
     OTHER: 9999, // Other general errors
   },
   ZIGBEE: {

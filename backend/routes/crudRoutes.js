@@ -20,4 +20,8 @@ router.get(
   productCrudService.getProductsForRoom
 );
 
+router.put(CrudRoutes.UPDATE, apiController.updateModel);
+
+router.delete(CrudRoutes.DELETE, apiController.deleteModel);
+
 module.exports = router;

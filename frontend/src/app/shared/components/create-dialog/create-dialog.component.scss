@@ -1,19 +1,16 @@
-/* Container for the full-width form fields */
-.full-width {
+'' .full-width {
   width: 100%;
   margin-bottom: 20px;
 }
 
-/* Dialog content padding and layout */
-mat-dialog-content {
+'' mat-dialog-content {
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding: 24px 0 0 0;
 }
 
-/* Style for the dialog title */
-h2[mat-dialog-title] {
+'' h2[mat-dialog-title] {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 8px;
@@ -21,31 +18,26 @@ h2[mat-dialog-title] {
   letter-spacing: 0.5px;
 }
 
-/* Style for form fields */
-mat-form-field {
+'' mat-form-field {
   width: 100%;
 }
 
-/* Checkbox alignment */
-mat-checkbox {
+'' mat-checkbox {
   margin: 4px 0 20px 0;
 }
 
-/* Dialog actions (buttons) styling */
-mat-dialog-actions {
+'' mat-dialog-actions {
   padding-top: 16px;
   border-top: 1px solid #e0e0e0;
   background: #fafbfc;
 }
 
-/* Button spacing */
-mat-dialog-actions button {
+'' mat-dialog-actions button {
   min-width: 100px;
   margin-left: 12px;
 }
 
-/* Responsive design for smaller screens */
-@media (max-width: 600px) {
+'' @media (max-width: 600px) {
   mat-dialog-content {
     padding: 12px 0 0 0;
     gap: 8px;

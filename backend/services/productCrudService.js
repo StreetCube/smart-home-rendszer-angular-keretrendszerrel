@@ -154,7 +154,6 @@ exports.getProductsForRoom = async (req, res) => {
       );
     }
 
-    // 1. First get products with capabilities (no device states)
     const products = await models[MODEL_CONSTANTS.NAME.PRODUCT].findAll({
       where: {
         RoomId: roomId,
@@ -187,9 +186,6 @@ exports.getProductsForRoom = async (req, res) => {
       ],
     });
 
-    // 2. Get latest device states for all product capabilities
-
-    // 3. Map latest states to products
     const productsWithLatestStates = await Promise.all(
       products.map(async (product) => {
         const productJson = product.get({ plain: true });

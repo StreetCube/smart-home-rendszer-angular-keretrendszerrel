@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{data.title | translate}}</h2>
+<mat-dialog-content>
+    {{data.text| translate}}
+</mat-dialog-content>
+<mat-dialog-actions class="warn-button-container" align="end">
+    <button mat-button mat-dialog-close="no">{{'auth.logout.no' | translate}}</button>
+    <button mat-raised-button color="warn" mat-dialog-close="yes">{{'auth.logout.yes' | translate}}</button>
+</mat-dialog-actions>

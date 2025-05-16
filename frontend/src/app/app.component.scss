@@ -1,22 +1,21 @@
-/* filepath: c:\Diplomamunka\frontend\src\app\app.component.scss */
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensures the app takes up the full viewport height */
+  min-height: 100vh;
 }
 
 .app-content {
-  flex: 1; /* Pushes the footer to the bottom */
+  flex: 1;
 }
 
 .app-footer {
-  background-color: #1c3d5a; /* Matches the app's background color */
+  background-color: #1c3d5a;
   color: white;
   padding: 20px 0;
   text-align: center;
   font-family: 'Roboto', sans-serif;
   font-size: 0.9rem;
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow for better visibility */
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
   width: 100%;
 
   .footer-content {
@@ -43,7 +42,7 @@
         transition: color 0.3s ease;
 
         &:hover {
-          color: #00b8d4; /* Slightly brighter hover color */
+          color: #00b8d4;
         }
       }
     }

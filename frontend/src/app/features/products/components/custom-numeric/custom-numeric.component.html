@@ -1,0 +1,10 @@
+@if (settable) {
+<div class="numeric-display">
+    <span>{{ currentValue }}{{ numericExposed().unit || '' }}</span>
+    <button mat-button (click)="openSetValueDialog()">{{ 'create.product.set_value' | translate }}</button>
+</div>
+} @else {
+<div class="numeric-display">
+    <span>{{ currentValue }}{{ numericExposed().unit || '' }}</span>
+</div>
+}

@@ -31,4 +31,26 @@ export class CrudService<T> {
       })
     );
   }
+
+  public update<R = T, P = T>(item: P): Observable<GeneralHttpResponse<'update', R>> {
+    return this.http.put<GeneralHttpResponse<'update', R>>(RouteConstants.CRUD.UPDATE(this.modelPartName), item).pipe(
+      tap(() => {
+        this.dataChanged.next();
+      }),
+      catchError((error: GeneralHttpResponse<'update', R>) => {
+        return of(error);
+      })
+    );
+  }
+
+  public delete<R = T>(id: string): Observable<GeneralHttpResponse<'delete', R>> {
+    return this.http.delete<GeneralHttpResponse<'delete', R>>(RouteConstants.CRUD.DELETE(this.modelPartName, id)).pipe(
+      tap(() => {
+        this.dataChanged.next();
+      }),
+      catchError((error: GeneralHttpResponse<'delete', R>) => {
+        return of(error);
+      })
+    );
+  }
 }

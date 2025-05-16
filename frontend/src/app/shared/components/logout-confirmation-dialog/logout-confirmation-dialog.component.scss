@@ -2,12 +2,10 @@
 .warn-button-container {
   @include mat.button-overrides(
     (
-      // For filled buttons (mat-raised-button)
-      filled-container-color: red,
+      '' filled-container-color: red,
       filled-label-text-color: white,
 
-      // For outlined buttons (mat-button)
-      outlined-outline-color: red,
+      '' outlined-outline-color: red,
       outlined-label-text-color: red
     )
   );

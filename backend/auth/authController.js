@@ -30,6 +30,7 @@ exports.login = async (req, res) => {
       message: 'Logged in successfully',
       code: HTTP_CONSTANTS.CODE.OK,
       data: {
+        id: user.id,
         username: user.username,
         permission: user.permission,
         email: user.email,

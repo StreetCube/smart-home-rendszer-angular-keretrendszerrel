@@ -18,9 +18,12 @@ exports.ROUTES = Object.freeze({
     GET_ALL: '/get-all',
     ROOMS_WITH_PRODUCT_NUMBERS: '/rooms-with-product-numbers',
     GET_PRODUCTS_FOR_ROOM: '/:roomId/products',
+    UPDATE: '/update',
+    DELETE: '/:id/delete',
   },
   DEVICE: {
     INCLUDE: '/include',
     EXCLUDE: '/:ieeeAddress/exclude',
+    SEND_COMMAND: '/send-command',
   },
 });

@@ -33,6 +33,7 @@ export class AuthService {
       tap((response) => {
         if (response.data) {
           this.user.set(response.data);
+          console.log(this.user());
         }
       }),
       catchError((error: GeneralHttpResponse<'login'>) => {

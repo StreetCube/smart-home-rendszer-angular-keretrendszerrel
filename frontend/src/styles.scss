@@ -6,7 +6,7 @@ html {
     @include mat.theme(
       (
         color: mat.$violet-palette,
-        // or your custom palette
+
         typography: Roboto,
         density: 0,
       )
@@ -22,10 +22,9 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: #1c3d5a; /* Fallback background color */
+  background-color: #1c3d5a;
 }
 
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
 :root {
   @include mat.toolbar-overrides(
     (
@@ -49,13 +48,11 @@ body {
   .warn-button-container {
     @include mat.button-overrides(
       (
-        // For filled buttons (mat-raised-button)
         filled-container-color: red,
         filled-label-text-color: white,
 
-        // For outlined buttons (mat-button)
         outlined-outline-color: red,
-        outlined-label-text-color: red
+        outlined-label-text-color: red,
       )
     );
   }
@@ -64,13 +61,11 @@ body {
 .warnButton {
   @include mat.button-overrides(
     (
-      // For filled buttons (mat-raised-button)
       filled-container-color: red,
       filled-label-text-color: white,
 
-      // For outlined buttons (mat-button)
       outlined-outline-color: red,
-      outlined-label-text-color: red
+      outlined-label-text-color: red,
     )
   );
 }

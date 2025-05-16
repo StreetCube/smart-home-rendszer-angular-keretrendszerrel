@@ -7,6 +7,16 @@ export class TableColumnConstants {
         property_name: 'name',
         header: 'table_columns.room_name',
       },
+      {
+        property_name: 'createdAt',
+        type: 'date',
+        header: 'table_columns.created_at',
+      },
+      {
+        property_name: 'updatedAt',
+        type: 'date',
+        header: 'table_columns.updated_at',
+      },
     ],
     PRODUCT: [
       {

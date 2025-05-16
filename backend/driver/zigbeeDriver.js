@@ -55,21 +55,29 @@ class ZigbeeDriver extends EventEmitter {
     logger.debug('[_handleDevicesList]', 'Received message from ', topic);
 
     for (const device of payload) {
-      const existingDevice = this.getDeviceByAddress(device.ieee_address);
-      if (
-        !existingDevice &&
-        device.type !== 'Coordinator' &&
-        device.interview_completed
-      ) {
-        this.devices[device.ieee_address] = await ZigbeeDevice.create(
-          device,
-          this
-        );
-        this.emit(
-          ZIGBEE2MQTT_EVENTS.DEVICE_ADDED,
-          this.devices[device.ieee_address]
-        );
-      }
+      let existingDevice;
+      setTimeout(async () => {
+        existingDevice = this.getDeviceByAddress(device.ieee_address);
+        if (
+          !existingDevice &&
+          device.type !== 'Coordinator' &&
+          device.interview_completed
+        ) {
+          this.devices[device.ieee_address] = await ZigbeeDevice.create(
+            device,
+            this
+          );
+          logger.debug(
+            '[_handleDevicesList]',
+            'Device added to driver',
+            this.devices[device.ieee_address]
+          );
+          this.emit(
+            ZIGBEE2MQTT_EVENTS.DEVICE_ADDED,
+            this.devices[device.ieee_address]
+          );
+        }
+      }, 1000);
     }
     this.emit(ZIGBEE2MQTT_EVENTS.DEVICES_LIST_UPDATE, payload);
   }

@@ -4,13 +4,13 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow-x: auto; // Enable horizontal scroll if needed
+  overflow-x: auto;
 }
 
 table {
   flex: 1 1 auto;
   width: 100%;
-  min-width: 600px; // Prevents columns from squishing too much
+  min-width: 600px;
   overflow: auto;
   border-collapse: collapse;
 }
@@ -20,15 +20,15 @@ table {
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #c6ddff; // Use your preferred highlight color
+    background-color: #c6ddff;
   }
 }
 
 .sticky-paginator {
   position: sticky;
   bottom: 0;
-  background-color: white; // Matches the table background
-  z-index: 1; // Ensures it stays above other content
+  background-color: white;
+  z-index: 1;
 }
 
 #hiddenMenuTrigger {

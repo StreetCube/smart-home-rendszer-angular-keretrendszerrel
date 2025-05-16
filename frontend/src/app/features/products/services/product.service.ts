@@ -37,4 +37,18 @@ export class ProductService extends CrudService<Product> {
         })
       );
   }
+
+  public sendCommandToDevice(
+    ieeeAddress: string,
+    property: string,
+    value: string
+  ): Observable<GeneralHttpResponse<any>> {
+    return this.http
+      .post<GeneralHttpResponse<any>>(RouteConstants.DEVICE.SEND_COMMAND, { value, ieeeAddress, property })
+      .pipe(
+        catchError((error: GeneralHttpResponse<any>) => {
+          return of(error);
+        })
+      );
+  }
 }

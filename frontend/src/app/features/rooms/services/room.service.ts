@@ -10,7 +10,7 @@ import { Room } from '../types/Room';
 })
 export class RoomService extends CrudService<Room> {
   constructor() {
-    super('Room'); // Specify the model name for CRUD operations
+    super('Room');
   }
 
   public override dataChanged: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);

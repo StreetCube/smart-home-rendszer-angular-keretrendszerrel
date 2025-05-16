@@ -26,7 +26,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideRouter(routes),
     provideAnimations(),
-    // New Angular 19+ app initializer pattern
     provideAppInitializer(() => {
       const authService = inject(AuthService);
       return authService.checkAuthState();

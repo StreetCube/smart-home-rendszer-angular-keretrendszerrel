@@ -50,7 +50,3 @@ module.exports = (sequelize) => {
   };
   return Room;
 };
-
-//room getAll -> click on one of the rooms
-// -> get all products in that room display cards based on the capabilites of the product
-// -> We also need to get device_state but only the latest for each productCapability

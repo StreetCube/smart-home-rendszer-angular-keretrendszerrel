@@ -5,6 +5,17 @@ export interface Product {
   supportedProduct: SupportedProduct;
 }
 
+export interface ProductAfterUpdate {
+  RoomId: string;
+  SupportedProductId: string;
+  createdAt: string;
+  id: string;
+  ieeeAddress: string;
+  name: string;
+  state: boolean;
+  updatedAt: string;
+}
+
 export interface SupportedProduct {
   id: string;
   name: string;

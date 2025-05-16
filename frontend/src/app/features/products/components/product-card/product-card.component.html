@@ -17,40 +17,50 @@
     </mat-card-header>
 
     <mat-card-content>
-        <!-- Show more details even when collapsed -->
         <div class="device-details">
-            <div><strong>Linkquality:</strong> {{ linkQuality }} lqi</div>
-            <!-- Add more summary fields as needed -->
+            <div><strong>{{'create.product.link_quality' |translate}}</strong> {{ linkQuality }} lqi</div>
         </div>
 
         <mat-expansion-panel>
             <mat-expansion-panel-header>
-                <span>Show Capabilities</span>
+                <span>{{'create.product.show_capabilities' | translate}}</span>
             </mat-expansion-panel-header>
-            @for (cap of product().SupportedProduct.ProductCapabilities; track cap.id) {
-            <div class="capability-row" [matTooltip]="cap.description" matTooltipPosition="above">
-                <span class="cap-label">{{ cap.label }}:</span>
-                <span>
-                    @if (cap.type === 'numeric') {
-                    {{ cap.deviceState.numericValue }} {{ cap.NumericExpose?.unit || '' }}
-                    }
-                    @if (cap.type === 'enum') {
-                    <mat-form-field appearance="outline" class="enum-select">
-                        <mat-select [value]="cap.deviceState.textValue">
-                            @for (option of cap.EnumExpose?.values; track option) {
-                            <mat-option [value]="option">{{ option }}</mat-option>
+            <div class="capabilities-grid">
+                @for (cap of product().SupportedProduct.ProductCapabilities; track cap.id) {
+                <div class="capability-row" [matTooltip]="cap.description | zigbee2mqttTranslate:'featureDescriptions'"
+                    matTooltipPosition="above">
+                    <span class="cap-label">{{ languageService.currentLanguage().code === 'hu' ? (cap.property |
+                        zigbee2mqttTranslate:'featureNames') : cap.label
+                        }}:</span>
+                    <span>
+                        <span>
+                            @if (cap.type === 'numeric' && cap.NumericExpose) {
+                            <app-custom-numeric [numericExposed]="cap.NumericExpose" [access]="cap.access"
+                                (valueChanged)="onValueChange($event, cap)"
+                                [value]="cap.deviceState.numericValue || 0"></app-custom-numeric>
                             }
-                        </mat-select>
-                    </mat-form-field>
-                    }
-                    @if (cap.type === 'binary') {
-                    <mat-slide-toggle>
-                    </mat-slide-toggle>
-                    {{ cap.deviceState.boolValue }}
-                    }
-                </span>
+                            @if (cap.type === 'enum') {
+                            <mat-form-field appearance="outline" class="enum-select compact-select">
+                                <mat-select [value]="cap.deviceState.textValue"
+                                    (valueChange)="onValueChange($event, cap)">
+                                    @for (option of cap.EnumExpose?.values; track option) {
+                                    <mat-option [value]="option">{{ option }}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+                            }
+                            @if (cap.type === 'binary' && cap.BinaryExpose) {
+                            <app-custom-mat-slide-toggle [currentValue]="cap.deviceState.boolValue"
+                                [offValue]="cap.BinaryExpose.value_off" [onValue]="cap.BinaryExpose.value_on"
+                                (stateChanged)="onValueChange($event, cap)">
+                                {{ cap.deviceState.boolValue }}
+                            </app-custom-mat-slide-toggle>
+                            }
+                        </span>
+                    </span>
+                </div>
+                }
             </div>
-            }
         </mat-expansion-panel>
     </mat-card-content>
 </mat-card>

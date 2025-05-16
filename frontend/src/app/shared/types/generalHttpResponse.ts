@@ -1,6 +1,6 @@
 import { UserAfterCreate } from '../../features/auth/types/User';
 import { ProductForRoom } from '../../features/products/types/Product';
-import { RoomWithProductNumbers } from '../../features/rooms/types/Room';
+import { Room, RoomWithProductNumbers } from '../../features/rooms/types/Room';
 
 type EndpointCodes = {
   all: CombinedCustomCode;
@@ -26,6 +26,12 @@ type EndpointCodes = {
     | ApiCustomCode.ALREADY_EXISTS;
   room_with_product_numbers: GeneralCustomCode.SUCCESS | ApiCustomCode.ERROR_GETTING_RESOURCE;
   products_for_room: GeneralCustomCode.SUCCESS | GeneralCustomCode.BAD_REQUEST | ApiCustomCode.ERROR_GETTING_RESOURCE;
+  update:
+    | GeneralCustomCode.SUCCESS
+    | ApiCustomCode.ERROR_GETTING_RESOURCE
+    | ApiCustomCode.ERROR_CREATING_RESOURCE
+    | ApiCustomCode.ALREADY_EXISTS;
+  delete: GeneralCustomCode.SUCCESS | ApiCustomCode.ERROR_GETTING_RESOURCE | ApiCustomCode.ERROR_DELETEING_RESOURCE;
 };
 
 type DataForResponses = {
@@ -39,6 +45,8 @@ type DataForResponses = {
   include: any;
   room_with_product_numbers: RoomWithProductNumbers[];
   products_for_room: ProductForRoom[] | null;
+  update: Room;
+  delete: any;
 };
 
 type ErrorCodeFor<E extends keyof EndpointCodes> = EndpointCodes[E];
@@ -68,6 +76,7 @@ export enum ApiCustomCode {
   ALREADY_EXISTS = 2001,
   ERROR_GETTING_RESOURCE = 2002, // Error getting resource from the API
   ERROR_CREATING_RESOURCE = 2003, // Error creating resource in the API
+  ERROR_DELETEING_RESOURCE = 2004, // Error deleting resource in the API
 }
 
 export enum GeneralCustomCode {

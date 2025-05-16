@@ -167,6 +167,17 @@ class MqttSubscriptionManager {
     });
   }
 
+  /**
+   * Checks if an MQTT topic matches a subscription pattern.
+   *
+   * Supports MQTT wildcards:
+   * - '#' matches any number of levels (including zero)
+   * - '+' matches exactly one level
+   *
+   * @param {string} actualTopic - The topic received from the broker.
+   * @param {string} pattern - The subscription pattern (may include wildcards).
+   * @returns {boolean} True if the topic matches the pattern, false otherwise.
+   */
   _topicMatchesPattern(actualTopic, pattern) {
     const patternSegments = pattern.split('/');
     const topicSegments = actualTopic.split('/');
@@ -199,7 +210,6 @@ class MqttSubscriptionManager {
     return topicSegments.length === patternSegments.length;
   }
 }
-
 const subscriptionManager = new MqttSubscriptionManager();
 
 /**

@@ -35,7 +35,7 @@ class ZigbeeDevice extends EventEmitter {
 
     this.options = device.definition
       ? getZigbeeDeviceProperties(device.definition.options)
-      : {}; //Probably wont be implemented
+      : {};
 
     this.deviceName = `${this.device.definition.vendor} - ${this.device.definition.model}`;
     this.type = this._determineDeviceType();

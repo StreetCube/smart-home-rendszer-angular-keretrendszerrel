@@ -84,7 +84,6 @@ exports.createProductCapabilities = async (
   }
 };
 
-// Type-specific expose creators
 const createBinaryExpose = async (capability, transaction) => {
   try {
     const binary = await models[MODEL_CONSTANTS.NAME.BINARY_EXPOSE].create(
@@ -150,7 +149,6 @@ const createEnumExpose = async (capability, transaction) => {
   }
 };
 
-// Main capability record creator
 const createProductCapabilityRecord = async (
   capability,
   supportedProductId,
@@ -162,6 +160,7 @@ const createProductCapabilityRecord = async (
       {
         type: capability.type,
         name: capability.name,
+        label: capability.label,
         property: capability.property,
         access: capability.access,
         description: capability.description,

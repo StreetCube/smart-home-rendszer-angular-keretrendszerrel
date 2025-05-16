@@ -4,6 +4,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Subscription, switchMap } from 'rxjs';
 import { DynamicFormDialogComponent } from '../../../../shared/components/create-dialog/create-dialog.component';
+import { DeleteProductConfirmationDialogComponent } from '../../../../shared/components/delete-product-confirmation-dialog/delete-product-confirmation-dialog.component';
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { CreateDialogConstants } from '../../../../shared/constants/create-dialog.constants';
 import { TableColumnConstants } from '../../../../shared/constants/table-column.constants';
@@ -55,12 +56,44 @@ export class RoomsComponent implements OnInit, OnDestroy {
     console.log('Viewing devices for room:', room);
   }
 
-  editRoom(room: any): void {
-    console.log('Editing room:', room);
+  editRoom(room: Room): void {
+    this.roomService.update(room).subscribe((response) => {
+      if (response && response.data) {
+        this.snackBarService.showSuccess('update.room.success');
+      } else {
+        switch (response.error.code) {
+          case ApiCustomCode.ALREADY_EXISTS:
+            this.snackBarService.showError('update.room.already_exists');
+            break;
+          default:
+            this.snackBarService.showError('update.room.unknown_error');
+            break;
+        }
+      }
+    });
   }
 
   deleteRoom(room: any): void {
-    console.log('Deleting room:', room);
+    const dialog = this.dialog
+      .open(DeleteProductConfirmationDialogComponent, {
+        data: { title: 'delete.room.title', text: 'delete.room.text' },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result === 'yes') {
+          this.roomService.delete(room.id).subscribe((response) => {
+            if (response && response.data) {
+              this.snackBarService.showSuccess('delete.room.success');
+            } else {
+              switch (response.error.code) {
+                default:
+                  this.snackBarService.showError('delete.room.error');
+                  break;
+              }
+            }
+          });
+        }
+      });
   }
 
   handleRoomAction(event: { action: string; item: any }): void {

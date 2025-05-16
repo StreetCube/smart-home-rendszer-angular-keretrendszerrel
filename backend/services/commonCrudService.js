@@ -113,3 +113,52 @@ exports.additionalTasksAfterCreation = (modelName, body, res) => {
     throw error;
   }
 };
+
+exports.checkExistingElementsForUpdate = async (modelName, body) => {
+  try {
+    logger.info(
+      `[${TAG}] Checking if elements already exist for model: ${modelName}`
+    );
+    let findWhere = {};
+    let errorCode = HTTP_CONSTANTS.CUSTOM_CODE.API.ALREADY_EXISTS;
+
+    switch (modelName) {
+      case MODEL_CONSTANTS.NAME.ROOM:
+        logger.debug(`[${TAG}] Preparing where condition for Room model`);
+        findWhere = {
+          name: body.name,
+        };
+        break;
+      case MODEL_CONSTANTS.NAME.PRODUCT:
+        logger.debug(`[${TAG}] Preparing where condition for Product model`);
+        findWhere = {
+          name: body.name,
+          RoomId: body.RoomId,
+        };
+        break;
+      default:
+        break;
+    }
+    if (Object.keys(findWhere).length !== 0) {
+      const foundItems = await models[modelName].findAll({ where: findWhere });
+      if (foundItems.length > 0) {
+        logger.warn(`[${TAG}] Element already exists for model: ${modelName}`);
+        throw new CustomError(
+          'Already exists',
+          errorCode || HTTP_CONSTANTS.CUSTOM_CODE.API.ALREADY_EXISTS,
+          HTTP_CONSTANTS.CODE.CONFLICT
+        );
+      }
+    }
+
+    logger.info(`[${TAG}] No existing elements found for model: ${modelName}`);
+    return true;
+  } catch (error) {
+    logger.error(
+      `[${TAG}] Error while checking existing elements: ${error.message}`
+    );
+    if (error instanceof CustomError) {
+      throw error;
+    }
+  }
+};

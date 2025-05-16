@@ -9,6 +9,11 @@ router.post(
   zigbeeController.includeDevice
 );
 
+router.post(
+  ROUTER_CONSTANTS.ROUTES.DEVICE.SEND_COMMAND,
+  zigbeeController.sendCommandToDevice
+);
+
 router.delete(
   ROUTER_CONSTANTS.ROUTES.DEVICE.EXCLUDE,
   zigbeeController.excludeDevice

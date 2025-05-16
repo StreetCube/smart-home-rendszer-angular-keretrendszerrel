@@ -14,9 +14,14 @@ exports.associateModels = (models) => {
     models[MODEL_CONSTANTS.NAME.PRODUCT]
   );
   models[MODEL_CONSTANTS.NAME.PRODUCT].hasMany(
-    models[MODEL_CONSTANTS.NAME.DEVICE_STATE]
+    models[MODEL_CONSTANTS.NAME.DEVICE_STATE],
+    {
+      foreignKey: {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
+    }
   );
-
   // Room <---* Product (One Room hasMany Products, Product belongsTo Room)
   models[MODEL_CONSTANTS.NAME.ROOM].hasMany(
     models[MODEL_CONSTANTS.NAME.PRODUCT]

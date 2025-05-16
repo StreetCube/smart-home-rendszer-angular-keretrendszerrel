@@ -1,10 +1,3 @@
-export interface Room_GetAllResponse {
-  id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface Room_To_Create {
   name: string;
   UserId: string;

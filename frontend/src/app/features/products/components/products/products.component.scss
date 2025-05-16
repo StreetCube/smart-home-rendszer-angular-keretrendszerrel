@@ -36,16 +36,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 16px; // Space from the button if needed
+  margin-left: 16px;
 }
 
 .loading-text {
   margin-top: 6px;
   font-size: 1rem;
-  color: #1976d2; // Primary color, adjust as needed
+  color: #1976d2;
 }
 
-/* Responsive styles */
 @media (max-width: 900px) {
   .top-section {
     margin-top: 10vh;
@@ -58,7 +57,7 @@
 
 @media (max-width: 600px) {
   .rooms-container {
-    height: 100dvh; // Use dynamic viewport for mobile browsers
+    height: 100dvh;
   }
   .top-section {
     margin-top: 4vh;
@@ -71,6 +70,6 @@
     padding: 0 2px;
   }
   .table-wrapper {
-    padding-bottom: 56px; // Space for sticky paginator if needed
+    padding-bottom: 56px;
   }
 }
